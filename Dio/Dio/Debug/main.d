@@ -1,5 +1,5 @@
 main.d main.o: .././main.c .././ATmega32_Cfg.h .././Dio.h \
- .././Std_Types.h .././Macros.h .././Sw.h .././Led.h \
+ .././Std_Types.h .././Macros.h .././Sw.h .././Buzzer.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h \
@@ -17,7 +17,7 @@ main.d main.o: .././main.c .././ATmega32_Cfg.h .././Dio.h \
 
 .././Sw.h:
 
-.././Led.h:
+.././Buzzer.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay.h:
 

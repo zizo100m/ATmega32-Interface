@@ -9,29 +9,30 @@
 #include "Dio.h"
 #include "Macros.h"
 #include "Sw.h"
-#include "Led.h"
+#include "Buzzer.h"
 #include <util/delay.h>
 
 
 int main(void)
 {
-	Led_Init(PORTC_DIR_REG, LED2);
 	Sw_init(PORTD_DIR_REG, SW2);
+	Sw_init(PORTD_DIR_REG, SW1);
+	Buzzer_Init();
 	
     /* Replace with your application code */
     while (1) 
     {
-		Sw_StateEnum_t  Sw_State = Sw_StateGet(PORTD_INP_REG,SW2);
-		if(Sw_State == SW_PRESSED)
+		Sw_StateEnum_t  Sw2_State = Sw_StateGet(PORTD_INP_REG,SW2);
+		Sw_StateEnum_t  Sw1_State = Sw_StateGet(PORTD_INP_REG,SW1);
+		if(Sw2_State == SW_PRESSED)
 		{
-			Led_StateSet(PORTC_OUT_REG, LED2, LED_TOGGLE);
+			Buzzer_StateSet(BUZZER_ON);
 		}
-		else
+		else if (Sw1_State == SW_PRESSED)
 		{
-			/* Do Nothing */
+			Buzzer_StateSet(BUZZER_OFF);
 		}
-		
-		
+
     }
 }
 

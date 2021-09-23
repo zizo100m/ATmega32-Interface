@@ -123,6 +123,12 @@
     <Compile Include="ATmega32_Cfg.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Buzzer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Buzzer.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Dio.c">
       <SubType>compile</SubType>
     </Compile>
