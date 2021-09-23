@@ -17,6 +17,20 @@ Discarded input sections
  .text          0x00000000        0x0 Buzzer.o
  .data          0x00000000        0x0 Buzzer.o
  .bss           0x00000000        0x0 Buzzer.o
+ .text.Buzzer_Init
+                0x00000000        0xe Buzzer.o
+ .text.Buzzer_StateSet
+                0x00000000        0xe Buzzer.o
+ .debug_info    0x00000000      0x19b Buzzer.o
+ .debug_abbrev  0x00000000       0x98 Buzzer.o
+ .debug_loc     0x00000000       0x2c Buzzer.o
+ .debug_aranges
+                0x00000000       0x28 Buzzer.o
+ .debug_ranges  0x00000000       0x18 Buzzer.o
+ .debug_line    0x00000000       0x7b Buzzer.o
+ .debug_str     0x00000000      0x261 Buzzer.o
+ .comment       0x00000000       0x31 Buzzer.o
+ .debug_frame   0x00000000       0x34 Buzzer.o
  .text          0x00000000        0x0 Dio.o
  .data          0x00000000        0x0 Dio.o
  .bss           0x00000000        0x0 Dio.o
@@ -46,6 +60,9 @@ Discarded input sections
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
+ .text          0x00000000        0x0 Relay.o
+ .data          0x00000000        0x0 Relay.o
+ .bss           0x00000000        0x0 Relay.o
  .text          0x00000000        0x0 Sw.o
  .data          0x00000000        0x0 Sw.o
  .bss           0x00000000        0x0 Sw.o
@@ -101,6 +118,7 @@ LOAD Buzzer.o
 LOAD Dio.o
 LOAD Led.o
 LOAD main.o
+LOAD Relay.o
 LOAD Sw.o
 START GROUP
 LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a
@@ -291,23 +309,23 @@ END GROUP
                 0x00000078                __vector_20
                 0x0000007c                . = ALIGN (0x2)
  *(.text.*)
- .text.Buzzer_Init
-                0x0000007c        0xe Buzzer.o
-                0x0000007c                Buzzer_Init
- .text.Buzzer_StateSet
-                0x0000008a        0xe Buzzer.o
-                0x0000008a                Buzzer_StateSet
  .text.Dio_ChannelDirectionSet
-                0x00000098       0x3c Dio.o
-                0x00000098                Dio_ChannelDirectionSet
+                0x0000007c       0x3c Dio.o
+                0x0000007c                Dio_ChannelDirectionSet
  .text.Dio_ChannelRead
-                0x000000d4       0x2a Dio.o
-                0x000000d4                Dio_ChannelRead
+                0x000000b8       0x2a Dio.o
+                0x000000b8                Dio_ChannelRead
  .text.Dio_ChannelWrite
-                0x000000fe       0x3c Dio.o
-                0x000000fe                Dio_ChannelWrite
- .text.main     0x0000013a       0x46 main.o
-                0x0000013a                main
+                0x000000e2       0x3c Dio.o
+                0x000000e2                Dio_ChannelWrite
+ .text.main     0x0000011e       0x46 main.o
+                0x0000011e                main
+ .text.Relay_Init
+                0x00000164        0xe Relay.o
+                0x00000164                Relay_Init
+ .text.Relay_StateSet
+                0x00000172        0xe Relay.o
+                0x00000172                Relay_StateSet
  .text.Sw_init  0x00000180       0x24 Sw.o
                 0x00000180                Sw_init
  .text.Sw_StateGet
@@ -409,10 +427,10 @@ END GROUP
 
 .comment        0x00000000       0x30
  *(.comment)
- .comment       0x00000000       0x30 Buzzer.o
+ .comment       0x00000000       0x30 Dio.o
                                  0x31 (size before relaxing)
- .comment       0x00000030       0x31 Dio.o
  .comment       0x00000030       0x31 main.o
+ .comment       0x00000030       0x31 Relay.o
  .comment       0x00000030       0x31 Sw.o
 
 .note.gnu.avr.deviceinfo
@@ -438,11 +456,11 @@ END GROUP
 .debug_aranges  0x00000000       0xb8
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x28 Buzzer.o
+                0x00000000       0x48 Dio.o
  .debug_aranges
-                0x00000028       0x48 Dio.o
+                0x00000048       0x20 main.o
  .debug_aranges
-                0x00000070       0x20 main.o
+                0x00000068       0x28 Relay.o
  .debug_aranges
                 0x00000090       0x28 Sw.o
 
@@ -452,51 +470,51 @@ END GROUP
 .debug_info     0x00000000      0xe3c
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x4e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega32a/avr5/crtatmega32a.o
- .debug_info    0x000004e6      0x19b Buzzer.o
- .debug_info    0x00000681      0x2a2 Dio.o
- .debug_info    0x00000923      0x20f main.o
+ .debug_info    0x000004e6      0x2a2 Dio.o
+ .debug_info    0x00000788      0x20f main.o
+ .debug_info    0x00000997      0x19b Relay.o
  .debug_info    0x00000b32      0x30a Sw.o
 
 .debug_abbrev   0x00000000      0x84f
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x4a3 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega32a/avr5/crtatmega32a.o
- .debug_abbrev  0x000004a3       0x98 Buzzer.o
- .debug_abbrev  0x0000053b       0xd3 Dio.o
- .debug_abbrev  0x0000060e       0xd4 main.o
+ .debug_abbrev  0x000004a3       0xd3 Dio.o
+ .debug_abbrev  0x00000576       0xd4 main.o
+ .debug_abbrev  0x0000064a       0x98 Relay.o
  .debug_abbrev  0x000006e2      0x16d Sw.o
 
-.debug_line     0x00000000      0x488
+.debug_line     0x00000000      0x485
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x116 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega32a/avr5/crtatmega32a.o
- .debug_line    0x00000116       0x7b Buzzer.o
- .debug_line    0x00000191       0xf4 Dio.o
- .debug_line    0x00000285       0x92 main.o
- .debug_line    0x00000317      0x171 Sw.o
+ .debug_line    0x00000116       0xf4 Dio.o
+ .debug_line    0x0000020a       0x91 main.o
+ .debug_line    0x0000029b       0x79 Relay.o
+ .debug_line    0x00000314      0x171 Sw.o
 
 .debug_frame    0x00000000      0x120
  *(.debug_frame)
- .debug_frame   0x00000000       0x34 Buzzer.o
- .debug_frame   0x00000034       0x74 Dio.o
- .debug_frame   0x000000a8       0x24 main.o
+ .debug_frame   0x00000000       0x74 Dio.o
+ .debug_frame   0x00000074       0x24 main.o
+ .debug_frame   0x00000098       0x34 Relay.o
  .debug_frame   0x000000cc       0x54 Sw.o
 
-.debug_str      0x00000000      0x571
+.debug_str      0x00000000      0x56b
  *(.debug_str)
  .debug_str     0x00000000      0x196 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega32a/avr5/crtatmega32a.o
- .debug_str     0x00000196      0x233 Buzzer.o
-                                0x261 (size before relaxing)
- .debug_str     0x000003c9       0xca Dio.o
+ .debug_str     0x00000196      0x2a6 Dio.o
                                 0x2e0 (size before relaxing)
- .debug_str     0x00000493       0x5f main.o
-                                0x221 (size before relaxing)
- .debug_str     0x000004f2       0x7f Sw.o
+ .debug_str     0x0000043c       0x8c main.o
+                                0x21d (size before relaxing)
+ .debug_str     0x000004c8       0x24 Relay.o
+                                0x25b (size before relaxing)
+ .debug_str     0x000004ec       0x7f Sw.o
                                 0x2f2 (size before relaxing)
 
 .debug_loc      0x00000000      0x2cf
  *(.debug_loc)
- .debug_loc     0x00000000       0x2c Buzzer.o
- .debug_loc     0x0000002c       0xc4 Dio.o
- .debug_loc     0x000000f0       0x3c main.o
+ .debug_loc     0x00000000       0xc4 Dio.o
+ .debug_loc     0x000000c4       0x3c main.o
+ .debug_loc     0x00000100       0x2c Relay.o
  .debug_loc     0x0000012c      0x1a3 Sw.o
 
 .debug_macinfo
@@ -519,9 +537,9 @@ END GROUP
 
 .debug_ranges   0x00000000       0x78
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x18 Buzzer.o
- .debug_ranges  0x00000018       0x38 Dio.o
- .debug_ranges  0x00000050       0x10 main.o
+ .debug_ranges  0x00000000       0x38 Dio.o
+ .debug_ranges  0x00000038       0x10 main.o
+ .debug_ranges  0x00000048       0x18 Relay.o
  .debug_ranges  0x00000060       0x18 Sw.o
 
 .debug_macro

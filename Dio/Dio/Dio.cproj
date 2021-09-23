@@ -147,6 +147,12 @@
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Relay.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Relay.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Std_Types.h">
       <SubType>compile</SubType>
     </Compile>

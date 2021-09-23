@@ -9,7 +9,7 @@
 #include "Dio.h"
 #include "Macros.h"
 #include "Sw.h"
-#include "Buzzer.h"
+#include "Relay.h"
 #include <util/delay.h>
 
 
@@ -17,7 +17,7 @@ int main(void)
 {
 	Sw_init(PORTD_DIR_REG, SW2);
 	Sw_init(PORTD_DIR_REG, SW1);
-	Buzzer_Init();
+	Relay_Init();
 	
     /* Replace with your application code */
     while (1) 
@@ -26,11 +26,11 @@ int main(void)
 		Sw_StateEnum_t  Sw1_State = Sw_StateGet(PORTD_INP_REG,SW1);
 		if(Sw2_State == SW_PRESSED)
 		{
-			Buzzer_StateSet(BUZZER_ON);
+			Relay_StateSet(RELAY_ON);
 		}
 		else if (Sw1_State == SW_PRESSED)
 		{
-			Buzzer_StateSet(BUZZER_OFF);
+			Relay_StateSet(RELAY_OFF);
 		}
 
     }
