@@ -1,0 +1,402 @@
+
+SSD.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000264  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         0000000a  00800060  00000264  000002d8  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000002e2  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000314  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000098  00000000  00000000  00000350  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000cdc  00000000  00000000  000003e8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000769  00000000  00000000  000010c4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000421  00000000  00000000  0000182d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  000000f0  00000000  00000000  00001c50  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    0000054b  00000000  00000000  00001d40  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000286  00000000  00000000  0000228b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000068  00000000  00000000  00002511  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   8:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  10:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  14:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  18:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  1c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  20:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  24:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  28:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  2c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  30:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  34:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  38:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  3c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  40:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  44:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  48:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  4c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  50:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	e4 e6       	ldi	r30, 0x64	; 100
+  68:	f2 e0       	ldi	r31, 0x02	; 2
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	aa 36       	cpi	r26, 0x6A	; 106
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+  76:	0e 94 7d 00 	call	0xfa	; 0xfa <main>
+  7a:	0c 94 30 01 	jmp	0x260	; 0x260 <_exit>
+
+0000007e <__bad_interrupt>:
+  7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000082 <Dio_ChannelDirectionSet>:
+
+DioPinStateEnum_t Dio_ChannelRead(volatile uint8 * Port_reg, DioPinEnum_t Channel)
+{
+	DioPinStateEnum_t u8LocalPinValue = READ_BIT(*Port_reg,Channel);
+	return (u8LocalPinValue);
+}
+  82:	44 23       	and	r20, r20
+  84:	19 f0       	breq	.+6      	; 0x8c <Dio_ChannelDirectionSet+0xa>
+  86:	41 30       	cpi	r20, 0x01	; 1
+  88:	71 f0       	breq	.+28     	; 0xa6 <Dio_ChannelDirectionSet+0x24>
+  8a:	08 95       	ret
+  8c:	fc 01       	movw	r30, r24
+  8e:	40 81       	ld	r20, Z
+  90:	21 e0       	ldi	r18, 0x01	; 1
+  92:	30 e0       	ldi	r19, 0x00	; 0
+  94:	02 c0       	rjmp	.+4      	; 0x9a <Dio_ChannelDirectionSet+0x18>
+  96:	22 0f       	add	r18, r18
+  98:	33 1f       	adc	r19, r19
+  9a:	6a 95       	dec	r22
+  9c:	e2 f7       	brpl	.-8      	; 0x96 <Dio_ChannelDirectionSet+0x14>
+  9e:	20 95       	com	r18
+  a0:	24 23       	and	r18, r20
+  a2:	20 83       	st	Z, r18
+  a4:	08 95       	ret
+  a6:	fc 01       	movw	r30, r24
+  a8:	40 81       	ld	r20, Z
+  aa:	21 e0       	ldi	r18, 0x01	; 1
+  ac:	30 e0       	ldi	r19, 0x00	; 0
+  ae:	02 c0       	rjmp	.+4      	; 0xb4 <Dio_ChannelDirectionSet+0x32>
+  b0:	22 0f       	add	r18, r18
+  b2:	33 1f       	adc	r19, r19
+  b4:	6a 95       	dec	r22
+  b6:	e2 f7       	brpl	.-8      	; 0xb0 <Dio_ChannelDirectionSet+0x2e>
+  b8:	24 2b       	or	r18, r20
+  ba:	20 83       	st	Z, r18
+  bc:	08 95       	ret
+
+000000be <Dio_ChannelWrite>:
+
+void Dio_ChannelWrite(volatile uint8 * Port_reg, DioPinEnum_t Channel, DioPinStateEnum_t State)
+{
+	switch(State)
+  be:	44 23       	and	r20, r20
+  c0:	19 f0       	breq	.+6      	; 0xc8 <Dio_ChannelWrite+0xa>
+  c2:	41 30       	cpi	r20, 0x01	; 1
+  c4:	71 f0       	breq	.+28     	; 0xe2 <Dio_ChannelWrite+0x24>
+  c6:	08 95       	ret
+	{
+		case DIO_LOW:
+		CLEAR_BIT(*Port_reg,Channel);
+  c8:	fc 01       	movw	r30, r24
+  ca:	40 81       	ld	r20, Z
+  cc:	21 e0       	ldi	r18, 0x01	; 1
+  ce:	30 e0       	ldi	r19, 0x00	; 0
+  d0:	02 c0       	rjmp	.+4      	; 0xd6 <Dio_ChannelWrite+0x18>
+  d2:	22 0f       	add	r18, r18
+  d4:	33 1f       	adc	r19, r19
+  d6:	6a 95       	dec	r22
+  d8:	e2 f7       	brpl	.-8      	; 0xd2 <Dio_ChannelWrite+0x14>
+  da:	20 95       	com	r18
+  dc:	24 23       	and	r18, r20
+  de:	20 83       	st	Z, r18
+		break;
+  e0:	08 95       	ret
+		case DIO_HIGH:
+		SET_BIT(*Port_reg,Channel);
+  e2:	fc 01       	movw	r30, r24
+  e4:	40 81       	ld	r20, Z
+  e6:	21 e0       	ldi	r18, 0x01	; 1
+  e8:	30 e0       	ldi	r19, 0x00	; 0
+  ea:	02 c0       	rjmp	.+4      	; 0xf0 <Dio_ChannelWrite+0x32>
+  ec:	22 0f       	add	r18, r18
+  ee:	33 1f       	adc	r19, r19
+  f0:	6a 95       	dec	r22
+  f2:	e2 f7       	brpl	.-8      	; 0xec <Dio_ChannelWrite+0x2e>
+  f4:	24 2b       	or	r18, r20
+  f6:	20 83       	st	Z, r18
+  f8:	08 95       	ret
+
+000000fa <main>:
+#include <util/delay.h>
+
+
+int main(void)
+{
+    SSD_Init();
+  fa:	0e 94 84 00 	call	0x108	; 0x108 <SSD_Init>
+    while (1) 
+    {
+		SSD_NumSet(76);
+  fe:	8c e4       	ldi	r24, 0x4C	; 76
+ 100:	90 e0       	ldi	r25, 0x00	; 0
+ 102:	0e 94 c9 00 	call	0x192	; 0x192 <SSD_NumSet>
+ 106:	fb cf       	rjmp	.-10     	; 0xfe <main+0x4>
+
+00000108 <SSD_Init>:
+const uint8 gau8SSD_arr[10] = {ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE};
+
+void SSD_Init(void)
+{
+	/* Make Seven Segment Enable Pins in OUTPUT Mode */
+	Dio_ChannelDirectionSet(SSD_CTRL_DIR_REG, SSD1_EN ,DIO_OUTPUT);
+ 108:	41 e0       	ldi	r20, 0x01	; 1
+ 10a:	61 e0       	ldi	r22, 0x01	; 1
+ 10c:	87 e3       	ldi	r24, 0x37	; 55
+ 10e:	90 e0       	ldi	r25, 0x00	; 0
+ 110:	0e 94 41 00 	call	0x82	; 0x82 <Dio_ChannelDirectionSet>
+	Dio_ChannelDirectionSet(SSD_CTRL_DIR_REG, SSD2_EN ,DIO_OUTPUT);
+ 114:	41 e0       	ldi	r20, 0x01	; 1
+ 116:	62 e0       	ldi	r22, 0x02	; 2
+ 118:	87 e3       	ldi	r24, 0x37	; 55
+ 11a:	90 e0       	ldi	r25, 0x00	; 0
+ 11c:	0e 94 41 00 	call	0x82	; 0x82 <Dio_ChannelDirectionSet>
+	
+	/* Make Seven Segment Data Pins in OUTPUT Mode */
+	*SSD_DATA_DIR_REG = 0xF0U;   /* 0b11110000 */
+ 120:	80 ef       	ldi	r24, 0xF0	; 240
+ 122:	8a bb       	out	0x1a, r24	; 26
+ 124:	08 95       	ret
+
+00000126 <SSD_NumberDisplay>:
+}
+
+void SSD_NumberDisplay(SSD_LedsEnum_t Num, uint8 SSD_no)
+{
+ 126:	cf 93       	push	r28
+ 128:	c8 2f       	mov	r28, r24
+	/* Enable the SSD first */
+	switch(SSD_no)
+ 12a:	61 30       	cpi	r22, 0x01	; 1
+ 12c:	19 f0       	breq	.+6      	; 0x134 <SSD_NumberDisplay+0xe>
+ 12e:	62 30       	cpi	r22, 0x02	; 2
+ 130:	71 f0       	breq	.+28     	; 0x14e <SSD_NumberDisplay+0x28>
+ 132:	1a c0       	rjmp	.+52     	; 0x168 <SSD_NumberDisplay+0x42>
+	{
+		case SSD1_EN:
+			Dio_ChannelWrite(SSD_CTRL_OUT_REG, SSD1_EN, DIO_HIGH);
+ 134:	41 e0       	ldi	r20, 0x01	; 1
+ 136:	61 e0       	ldi	r22, 0x01	; 1
+ 138:	88 e3       	ldi	r24, 0x38	; 56
+ 13a:	90 e0       	ldi	r25, 0x00	; 0
+ 13c:	0e 94 5f 00 	call	0xbe	; 0xbe <Dio_ChannelWrite>
+			Dio_ChannelWrite(SSD_CTRL_OUT_REG, SSD2_EN, DIO_LOW);
+ 140:	40 e0       	ldi	r20, 0x00	; 0
+ 142:	62 e0       	ldi	r22, 0x02	; 2
+ 144:	88 e3       	ldi	r24, 0x38	; 56
+ 146:	90 e0       	ldi	r25, 0x00	; 0
+ 148:	0e 94 5f 00 	call	0xbe	; 0xbe <Dio_ChannelWrite>
+			break;
+ 14c:	19 c0       	rjmp	.+50     	; 0x180 <SSD_NumberDisplay+0x5a>
+		case SSD2_EN:
+			Dio_ChannelWrite(SSD_CTRL_OUT_REG, SSD2_EN, DIO_HIGH);
+ 14e:	41 e0       	ldi	r20, 0x01	; 1
+ 150:	62 e0       	ldi	r22, 0x02	; 2
+ 152:	88 e3       	ldi	r24, 0x38	; 56
+ 154:	90 e0       	ldi	r25, 0x00	; 0
+ 156:	0e 94 5f 00 	call	0xbe	; 0xbe <Dio_ChannelWrite>
+			Dio_ChannelWrite(SSD_CTRL_OUT_REG, SSD1_EN, DIO_LOW);
+ 15a:	40 e0       	ldi	r20, 0x00	; 0
+ 15c:	61 e0       	ldi	r22, 0x01	; 1
+ 15e:	88 e3       	ldi	r24, 0x38	; 56
+ 160:	90 e0       	ldi	r25, 0x00	; 0
+ 162:	0e 94 5f 00 	call	0xbe	; 0xbe <Dio_ChannelWrite>
+			break;
+ 166:	0c c0       	rjmp	.+24     	; 0x180 <SSD_NumberDisplay+0x5a>
+		default:
+			Dio_ChannelWrite(SSD_CTRL_OUT_REG, SSD1_EN, DIO_LOW);
+ 168:	40 e0       	ldi	r20, 0x00	; 0
+ 16a:	61 e0       	ldi	r22, 0x01	; 1
+ 16c:	88 e3       	ldi	r24, 0x38	; 56
+ 16e:	90 e0       	ldi	r25, 0x00	; 0
+ 170:	0e 94 5f 00 	call	0xbe	; 0xbe <Dio_ChannelWrite>
+			Dio_ChannelWrite(SSD_CTRL_OUT_REG, SSD2_EN, DIO_LOW);
+ 174:	40 e0       	ldi	r20, 0x00	; 0
+ 176:	62 e0       	ldi	r22, 0x02	; 2
+ 178:	88 e3       	ldi	r24, 0x38	; 56
+ 17a:	90 e0       	ldi	r25, 0x00	; 0
+ 17c:	0e 94 5f 00 	call	0xbe	; 0xbe <Dio_ChannelWrite>
+		break;
+	}
+	/* Write the number to the Data pins */
+    if(SSD_TYPE == SSD_COMMON_CATHODE)
+	{
+		*SSD_DATA_OUT_REG &= ~(0xF0U);
+ 180:	8b b3       	in	r24, 0x1b	; 27
+ 182:	8f 70       	andi	r24, 0x0F	; 15
+ 184:	8b bb       	out	0x1b, r24	; 27
+		*SSD_DATA_OUT_REG |= (Num & 0xF0U) ;
+ 186:	8b b3       	in	r24, 0x1b	; 27
+ 188:	c0 7f       	andi	r28, 0xF0	; 240
+ 18a:	c8 2b       	or	r28, r24
+ 18c:	cb bb       	out	0x1b, r28	; 27
+	}
+	else
+	{
+		*SSD_DATA_OUT_REG |= (~Num & 0xF0U);
+	}
+}
+ 18e:	cf 91       	pop	r28
+ 190:	08 95       	ret
+
+00000192 <SSD_NumSet>:
+void SSD_NumSet(uint16 Number)
+{
+ 192:	cf 93       	push	r28
+ 194:	df 93       	push	r29
+ 196:	ec 01       	movw	r28, r24
+	SSD_NumberDisplay(gau8SSD_arr[(Number%100)/10],SSD2_EN);
+ 198:	9c 01       	movw	r18, r24
+ 19a:	36 95       	lsr	r19
+ 19c:	27 95       	ror	r18
+ 19e:	36 95       	lsr	r19
+ 1a0:	27 95       	ror	r18
+ 1a2:	ab e7       	ldi	r26, 0x7B	; 123
+ 1a4:	b4 e1       	ldi	r27, 0x14	; 20
+ 1a6:	0e 94 21 01 	call	0x242	; 0x242 <__umulhisi3>
+ 1aa:	9c 01       	movw	r18, r24
+ 1ac:	36 95       	lsr	r19
+ 1ae:	27 95       	ror	r18
+ 1b0:	44 e6       	ldi	r20, 0x64	; 100
+ 1b2:	42 9f       	mul	r20, r18
+ 1b4:	c0 01       	movw	r24, r0
+ 1b6:	43 9f       	mul	r20, r19
+ 1b8:	90 0d       	add	r25, r0
+ 1ba:	11 24       	eor	r1, r1
+ 1bc:	9e 01       	movw	r18, r28
+ 1be:	28 1b       	sub	r18, r24
+ 1c0:	39 0b       	sbc	r19, r25
+ 1c2:	ad ec       	ldi	r26, 0xCD	; 205
+ 1c4:	bc ec       	ldi	r27, 0xCC	; 204
+ 1c6:	0e 94 21 01 	call	0x242	; 0x242 <__umulhisi3>
+ 1ca:	96 95       	lsr	r25
+ 1cc:	87 95       	ror	r24
+ 1ce:	96 95       	lsr	r25
+ 1d0:	87 95       	ror	r24
+ 1d2:	96 95       	lsr	r25
+ 1d4:	87 95       	ror	r24
+ 1d6:	fc 01       	movw	r30, r24
+ 1d8:	e0 5a       	subi	r30, 0xA0	; 160
+ 1da:	ff 4f       	sbci	r31, 0xFF	; 255
+ 1dc:	62 e0       	ldi	r22, 0x02	; 2
+ 1de:	80 81       	ld	r24, Z
+ 1e0:	0e 94 93 00 	call	0x126	; 0x126 <SSD_NumberDisplay>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 1e4:	8f e3       	ldi	r24, 0x3F	; 63
+ 1e6:	9c e9       	ldi	r25, 0x9C	; 156
+ 1e8:	01 97       	sbiw	r24, 0x01	; 1
+ 1ea:	f1 f7       	brne	.-4      	; 0x1e8 <SSD_NumSet+0x56>
+ 1ec:	00 c0       	rjmp	.+0      	; 0x1ee <SSD_NumSet+0x5c>
+ 1ee:	00 00       	nop
+	_delay_ms(10);
+	SSD_NumberDisplay(gau8SSD_arr[(Number%10)],SSD1_EN);
+ 1f0:	9e 01       	movw	r18, r28
+ 1f2:	ad ec       	ldi	r26, 0xCD	; 205
+ 1f4:	bc ec       	ldi	r27, 0xCC	; 204
+ 1f6:	0e 94 21 01 	call	0x242	; 0x242 <__umulhisi3>
+ 1fa:	96 95       	lsr	r25
+ 1fc:	87 95       	ror	r24
+ 1fe:	96 95       	lsr	r25
+ 200:	87 95       	ror	r24
+ 202:	96 95       	lsr	r25
+ 204:	87 95       	ror	r24
+ 206:	9c 01       	movw	r18, r24
+ 208:	22 0f       	add	r18, r18
+ 20a:	33 1f       	adc	r19, r19
+ 20c:	88 0f       	add	r24, r24
+ 20e:	99 1f       	adc	r25, r25
+ 210:	88 0f       	add	r24, r24
+ 212:	99 1f       	adc	r25, r25
+ 214:	88 0f       	add	r24, r24
+ 216:	99 1f       	adc	r25, r25
+ 218:	82 0f       	add	r24, r18
+ 21a:	93 1f       	adc	r25, r19
+ 21c:	9e 01       	movw	r18, r28
+ 21e:	28 1b       	sub	r18, r24
+ 220:	39 0b       	sbc	r19, r25
+ 222:	f9 01       	movw	r30, r18
+ 224:	e0 5a       	subi	r30, 0xA0	; 160
+ 226:	ff 4f       	sbci	r31, 0xFF	; 255
+ 228:	61 e0       	ldi	r22, 0x01	; 1
+ 22a:	80 81       	ld	r24, Z
+ 22c:	0e 94 93 00 	call	0x126	; 0x126 <SSD_NumberDisplay>
+ 230:	8f e3       	ldi	r24, 0x3F	; 63
+ 232:	9c e9       	ldi	r25, 0x9C	; 156
+ 234:	01 97       	sbiw	r24, 0x01	; 1
+ 236:	f1 f7       	brne	.-4      	; 0x234 <SSD_NumSet+0xa2>
+ 238:	00 c0       	rjmp	.+0      	; 0x23a <SSD_NumSet+0xa8>
+ 23a:	00 00       	nop
+	_delay_ms(10);
+ 23c:	df 91       	pop	r29
+ 23e:	cf 91       	pop	r28
+ 240:	08 95       	ret
+
+00000242 <__umulhisi3>:
+ 242:	a2 9f       	mul	r26, r18
+ 244:	b0 01       	movw	r22, r0
+ 246:	b3 9f       	mul	r27, r19
+ 248:	c0 01       	movw	r24, r0
+ 24a:	a3 9f       	mul	r26, r19
+ 24c:	70 0d       	add	r23, r0
+ 24e:	81 1d       	adc	r24, r1
+ 250:	11 24       	eor	r1, r1
+ 252:	91 1d       	adc	r25, r1
+ 254:	b2 9f       	mul	r27, r18
+ 256:	70 0d       	add	r23, r0
+ 258:	81 1d       	adc	r24, r1
+ 25a:	11 24       	eor	r1, r1
+ 25c:	91 1d       	adc	r25, r1
+ 25e:	08 95       	ret
+
+00000260 <_exit>:
+ 260:	f8 94       	cli
+
+00000262 <__stop_program>:
+ 262:	ff cf       	rjmp	.-2      	; 0x262 <__stop_program>

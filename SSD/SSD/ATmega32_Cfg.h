@@ -14,7 +14,7 @@
 
 #define PORTA_DIR_REG      ((volatile uint8*)0x3AU)
 #define PORTA_INP_REG      ((volatile uint8*)0x39U)
-#define PORTA_OUT_REG      ((volatile uint8*)0x38U)
+#define PORTA_OUT_REG      ((volatile uint8*)0x3BU)
 
 #define PORTB_DIR_REG      ((volatile uint8*)0x37U)
 #define PORTB_INP_REG      ((volatile uint8*)0x36U)
