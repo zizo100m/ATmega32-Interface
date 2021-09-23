@@ -17,17 +17,15 @@ typedef enum
 	SW_PRESSED	
 }Sw_StateEnum_t;
 
-typedef struct
+typedef enum
 {
-	DioPortEnum_t Sw_Port;
-	DioPinEnum_t Sw_Pin;
-	DioPinStateEnum_t Sw_PrevState;
-}SwStr_t;
+	SW0,
+	SW1,
+	SW2	
+}SwEnumt_t;
 
-void Sw_init(SwStr_t *Sw);
-Sw_StateEnum_t Sw_StateGet(SwStr_t *Sw);
+void Sw_init(volatile uint8 *Sw_Reg, SwEnumt_t Sw_no);
+Sw_StateEnum_t Sw_StateGet(volatile uint8 *Sw_Reg, SwEnumt_t Sw_no);
 
-
-extern SwStr_t aStr_KitSwitchs[3];
 
 #endif /* SW_H_ */

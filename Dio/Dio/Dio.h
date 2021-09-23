@@ -12,17 +12,6 @@
 #include "Std_Types.h"
 
 /**
- *  Defines an enumerated list of all the Ports on the MCU device.
- */
-typedef enum
-{
-    DIO_PORTA,
-    DIO_PORTB,
-    DIO_PORTC,
-    DIO_PORTD
-}DioPortEnum_t;
-
-/**
  *  Defines an enumerated list of all the channels (pins) on the MCU device.
  */
 typedef enum
@@ -55,11 +44,11 @@ typedef enum
     DIO_OUTPUT
 }DioPinDirectionEnum_t;
 
-void Dio_ChannelDirectionSet(DioPortEnum_t Port, DioPinEnum_t Channel, DioPinDirectionEnum_t Direction);
-DioPinStateEnum_t Dio_ChannelRead(DioPortEnum_t Port, DioPinEnum_t Channel);
-void Dio_ChannelWrite(DioPortEnum_t Port, DioPinEnum_t Channel, DioPinStateEnum_t State);
-void Dio_ChannelToggle(DioPortEnum_t Port, DioPinEnum_t Channel);
-void Dio_PortWrite(DioPortEnum_t Port, uint8 Value);
-uint8 Dio_PortRead(DioPortEnum_t Port);
+void Dio_ChannelDirectionSet(volatile uint8 * Port_reg, DioPinEnum_t Channel, DioPinDirectionEnum_t Direction);
+DioPinStateEnum_t Dio_ChannelRead(volatile uint8 * Port_reg, DioPinEnum_t Channel);
+void Dio_ChannelWrite(volatile uint8 * Port_reg, DioPinEnum_t Channel, DioPinStateEnum_t State);
+void Dio_ChannelToggle(volatile uint8 * Port_reg, DioPinEnum_t Channel);
+void Dio_PortWrite(volatile uint8 * Port_reg, uint8 Value);
+uint8 Dio_PortRead(volatile uint8 * Port_reg);
 
 #endif /* DIO_H_ */

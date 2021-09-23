@@ -18,16 +18,16 @@ typedef enum
 	LED_TOGGLE,
 }LedStateEnum_t;
 
-typedef struct
+typedef enum
 {
-	DioPortEnum_t Led_Port;
-	DioPinEnum_t  Led_Pin;
-	
-}LedStr_t;
+	LED0,
+	LED1,
+	LED2	
+}LedEnum_t;
 
-void Led_Init(LedStr_t *Led);
-void Led_StateSet(LedStr_t *Led, LedStateEnum_t state);
+void Led_Init(volatile uint8 *Led_reg, LedEnum_t Led_no);
+void Led_StateSet(volatile uint8 *Led_reg, LedEnum_t Led_no, LedStateEnum_t state);
 
-extern LedStr_t aStr_KitLeds[3];
+
 
 #endif /* LED_H_ */

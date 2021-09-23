@@ -39,10 +39,8 @@ SUBDIRS :=
 C_SRCS +=  \
 ../Dio.c \
 ../Led.c \
-../Led_Cfg.c \
 ../main.c \
-../Sw.c \
-../SW_Cfg.c
+../Sw.c
 
 
 PREPROCESSING_SRCS += 
@@ -54,34 +52,26 @@ ASM_SRCS +=
 OBJS +=  \
 Dio.o \
 Led.o \
-Led_Cfg.o \
 main.o \
-Sw.o \
-SW_Cfg.o
+Sw.o
 
 OBJS_AS_ARGS +=  \
 Dio.o \
 Led.o \
-Led_Cfg.o \
 main.o \
-Sw.o \
-SW_Cfg.o
+Sw.o
 
 C_DEPS +=  \
 Dio.d \
 Led.d \
-Led_Cfg.d \
 main.d \
-Sw.d \
-SW_Cfg.d
+Sw.d
 
 C_DEPS_AS_ARGS +=  \
 Dio.d \
 Led.d \
-Led_Cfg.d \
 main.d \
-Sw.d \
-SW_Cfg.d
+Sw.d
 
 OUTPUT_FILE_PATH +=Dio.elf
 
@@ -111,13 +101,6 @@ LINKER_SCRIPT_DEP+=
 	@echo Finished building: $<
 	
 
-./Led_Cfg.o: .././Led_Cfg.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32a -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32a" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
 ./main.o: .././main.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
@@ -126,13 +109,6 @@ LINKER_SCRIPT_DEP+=
 	
 
 ./Sw.o: .././Sw.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32a -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32a" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-./SW_Cfg.o: .././SW_Cfg.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32a -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32a" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

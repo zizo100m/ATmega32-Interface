@@ -8,19 +8,18 @@
 #include "Led.h"
 #include "Dio.h"
 
-void Led_Init(LedStr_t *Led)
+void Led_Init(volatile uint8 *Led_reg, LedEnum_t Led_no)
 {
-	Dio_ChannelDirectionSet(Led->Led_Port, Led->Led_Pin, DIO_OUTPUT);
-	Dio_ChannelWrite(Led->Led_Port, Led->Led_Pin, DIO_LOW);
+	Dio_ChannelDirectionSet(Led_reg, Led_no, DIO_OUTPUT);
 }
-void Led_StateSet(LedStr_t *Led, LedStateEnum_t state)
+void Led_StateSet(volatile uint8 *Led_reg, LedEnum_t Led_no, LedStateEnum_t state)
 {
 	if (state == LED_TOGGLE)
 	{
-		Dio_ChannelToggle(Led->Led_Port, Led->Led_Pin);
+		Dio_ChannelToggle(Led_reg, Led_no);
 	}
 	else
 	{
-		Dio_ChannelWrite(Led->Led_Port, Led->Led_Pin, state);
+		Dio_ChannelWrite(Led_reg, Led_no, state);
 	}
 }

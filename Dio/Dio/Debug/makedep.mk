@@ -6,11 +6,7 @@ Dio.c
 
 Led.c
 
-Led_Cfg.c
-
 main.c
 
 Sw.c
-
-SW_Cfg.c
 

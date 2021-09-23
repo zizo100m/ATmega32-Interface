@@ -15,17 +15,23 @@
 
 int main(void)
 {
-	Led_Init(&aStr_KitLeds[0]);
-	Sw_init(&aStr_KitSwitchs[1]);
+	Led_Init(PORTC_DIR_REG, LED2);
+	Sw_init(PORTD_DIR_REG, SW2);
 	
     /* Replace with your application code */
     while (1) 
     {
-		Sw_StateEnum_t SW1 = Sw_StateGet(&aStr_KitSwitchs[1]);
-		if (SW1 == SW_PRESSED)
+		Sw_StateEnum_t  Sw_State = Sw_StateGet(PORTD_INP_REG,SW2);
+		if(Sw_State == SW_PRESSED)
 		{
-			Led_StateSet(&aStr_KitLeds[0], LED_TOGGLE);
+			Led_StateSet(PORTC_OUT_REG, LED2, LED_TOGGLE);
 		}
+		else
+		{
+			/* Do Nothing */
+		}
+		
+		
     }
 }
 

@@ -12,21 +12,22 @@
 
 #define DEBOUNCE_PERIOD (20U)
 
-
-void Sw_init(SwStr_t *Sw)
+DioPinStateEnum_t Sw_PrevState;
+void Sw_init(volatile uint8 *Sw_Reg, SwEnumt_t Sw_no)
 {
-	Dio_ChannelDirectionSet(Sw->Sw_Port,Sw->Sw_Pin, DIO_INPUT);
-	Sw->Sw_PrevState = Dio_ChannelRead(Sw->Sw_Port, Sw->Sw_Pin);
+	Dio_ChannelDirectionSet(Sw_Reg, Sw_no, DIO_INPUT);
+    Sw_PrevState = Dio_ChannelRead(Sw_Reg, Sw_no);
 }
-Sw_StateEnum_t Sw_StateGet(SwStr_t *Sw)
+Sw_StateEnum_t Sw_StateGet(volatile uint8 *Sw_Reg, SwEnumt_t Sw_no)
 {
 	Sw_StateEnum_t LocalSwState = SW_RELEASED;
-	if(Sw->Sw_PrevState != Dio_ChannelRead(Sw->Sw_Port, Sw->Sw_Pin))
+	
+	if(Sw_PrevState != Dio_ChannelRead(Sw_Reg, Sw_no))
 	{
 		_delay_ms(DEBOUNCE_PERIOD);
 
-		Sw->Sw_PrevState = Dio_ChannelRead(Sw->Sw_Port, Sw->Sw_Pin);
-		if (Sw->Sw_PrevState == DIO_HIGH)
+		Sw_PrevState = Dio_ChannelRead(Sw_Reg, Sw_no);
+		if (Sw_PrevState == DIO_HIGH)
 		{
 			LocalSwState = SW_PRESSED;
 		}
