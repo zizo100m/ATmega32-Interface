@@ -40,10 +40,11 @@ void SSD_NumberDisplay(SSD_LedsEnum_t Num, uint8 SSD_no)
 			Dio_ChannelWrite(SSD_CTRL_OUT_REG, SSD2_EN, DIO_LOW);
 		break;
 	}
+	/* !Comment: This line zero the 4-bits of the data before setting the new value */
+	*SSD_DATA_OUT_REG &= ~(0xF0U);
 	/* Write the number to the Data pins */
     if(SSD_TYPE == SSD_COMMON_CATHODE)
 	{
-		*SSD_DATA_OUT_REG &= ~(0xF0U);
 		*SSD_DATA_OUT_REG |= (Num & 0xF0U) ;
 	}
 	else

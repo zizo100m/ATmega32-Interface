@@ -16,6 +16,7 @@ int main(void)
     while (1) 
     {
 		SSD_NumSet(76);
+		
     }
 }
 

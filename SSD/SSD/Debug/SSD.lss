@@ -260,13 +260,14 @@ void SSD_NumberDisplay(SSD_LedsEnum_t Num, uint8 SSD_no)
  17c:	0e 94 5f 00 	call	0xbe	; 0xbe <Dio_ChannelWrite>
 		break;
 	}
-	/* Write the number to the Data pins */
-    if(SSD_TYPE == SSD_COMMON_CATHODE)
-	{
-		*SSD_DATA_OUT_REG &= ~(0xF0U);
+	/* !Comment: This line zero the 4-bits of the data before setting the new value */
+	*SSD_DATA_OUT_REG &= ~(0xF0U);
  180:	8b b3       	in	r24, 0x1b	; 27
  182:	8f 70       	andi	r24, 0x0F	; 15
  184:	8b bb       	out	0x1b, r24	; 27
+	/* Write the number to the Data pins */
+    if(SSD_TYPE == SSD_COMMON_CATHODE)
+	{
 		*SSD_DATA_OUT_REG |= (Num & 0xF0U) ;
  186:	8b b3       	in	r24, 0x1b	; 27
  188:	c0 7f       	andi	r28, 0xF0	; 240
