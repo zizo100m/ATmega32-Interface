@@ -19,9 +19,9 @@ typedef enum
 
 typedef enum
 {
-	SW0,
-	SW1,
-	SW2	
+	SW0 = DIO_PIN0,
+	SW1 = DIO_PIN6,
+	SW2	= DIO_PIN2
 }SwEnumt_t;
 
 void Sw_init(volatile uint8 *Sw_Reg, SwEnumt_t Sw_no);

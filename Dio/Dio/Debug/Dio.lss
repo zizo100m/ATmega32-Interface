@@ -3,31 +3,31 @@ Dio.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         000001ee  00000000  00000000  00000074  2**1
+  0 .text         000001d2  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000000  00800060  00800060  00000262  2**0
+  1 .data         00000000  00800060  00800060  00000246  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          00000001  00800060  00800060  00000262  2**0
+  2 .bss          00000001  00800060  00800060  00000246  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00000262  2**0
+  3 .comment      00000030  00000000  00000000  00000246  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000294  2**2
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000278  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 000000b8  00000000  00000000  000002d0  2**0
+  5 .debug_aranges 000000b8  00000000  00000000  000002b4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000e3a  00000000  00000000  00000388  2**0
+  6 .debug_info   00000e5a  00000000  00000000  0000036c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 0000086c  00000000  00000000  000011c2  2**0
+  7 .debug_abbrev 0000086c  00000000  00000000  000011c6  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000473  00000000  00000000  00001a2e  2**0
+  8 .debug_line   00000467  00000000  00000000  00001a32  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000120  00000000  00000000  00001ea4  2**2
+  9 .debug_frame  00000110  00000000  00000000  00001e9c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000587  00000000  00000000  00001fc4  2**0
+ 10 .debug_str    00000587  00000000  00000000  00001fac  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000379  00000000  00000000  0000254b  2**0
+ 11 .debug_loc    00000322  00000000  00000000  00002533  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000078  00000000  00000000  000028c4  2**0
+ 12 .debug_ranges 00000078  00000000  00000000  00002855  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -77,7 +77,7 @@ Disassembly of section .text:
   6c:	b2 07       	cpc	r27, r18
   6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
   70:	0e 94 a7 00 	call	0x14e	; 0x14e <main>
-  74:	0c 94 f5 00 	jmp	0x1ea	; 0x1ea <_exit>
+  74:	0c 94 e7 00 	jmp	0x1ce	; 0x1ce <_exit>
 
 00000078 <__bad_interrupt>:
   78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -254,7 +254,7 @@ void Led_StateSet(volatile uint8 *Led_reg, LedEnum_t Led_no, LedStateEnum_t stat
 
 int main(void)
 {
-	Led_Init(PORTC_DIR_REG, LED2);
+	Led_Init(PORTC_DIR_REG, LED0);
  14e:	62 e0       	ldi	r22, 0x02	; 2
  150:	84 e3       	ldi	r24, 0x34	; 52
  152:	90 e0       	ldi	r25, 0x00	; 0
@@ -272,12 +272,12 @@ int main(void)
  162:	62 e0       	ldi	r22, 0x02	; 2
  164:	80 e3       	ldi	r24, 0x30	; 48
  166:	90 e0       	ldi	r25, 0x00	; 0
- 168:	0e 94 d1 00 	call	0x1a2	; 0x1a2 <Sw_StateGet>
+ 168:	0e 94 c3 00 	call	0x186	; 0x186 <Sw_StateGet>
 		if(Sw_State == SW_PRESSED)
  16c:	81 30       	cpi	r24, 0x01	; 1
  16e:	c9 f7       	brne	.-14     	; 0x162 <main+0x14>
 		{
-			Led_StateSet(PORTC_OUT_REG, LED2, LED_TOGGLE);
+			Led_StateSet(PORTC_OUT_REG, LED0, LED_TOGGLE);
  170:	42 e0       	ldi	r20, 0x02	; 2
  172:	62 e0       	ldi	r22, 0x02	; 2
  174:	85 e3       	ldi	r24, 0x35	; 53
@@ -286,99 +286,85 @@ int main(void)
  17c:	f2 cf       	rjmp	.-28     	; 0x162 <main+0x14>
 
 0000017e <Sw_init>:
-
 #define DEBOUNCE_PERIOD (20U)
 
-DioPinStateEnum_t Sw_PrevState;
+DioPinStateEnum_t Sw_PrevState = SW_RELEASED;
 void Sw_init(volatile uint8 *Sw_Reg, SwEnumt_t Sw_no)
 {
- 17e:	1f 93       	push	r17
- 180:	cf 93       	push	r28
- 182:	df 93       	push	r29
- 184:	ec 01       	movw	r28, r24
- 186:	16 2f       	mov	r17, r22
 	Dio_ChannelDirectionSet(Sw_Reg, Sw_no, DIO_INPUT);
- 188:	40 e0       	ldi	r20, 0x00	; 0
- 18a:	0e 94 3e 00 	call	0x7c	; 0x7c <Dio_ChannelDirectionSet>
-    Sw_PrevState = Dio_ChannelRead(Sw_Reg, Sw_no);
- 18e:	61 2f       	mov	r22, r17
- 190:	ce 01       	movw	r24, r28
- 192:	0e 94 5c 00 	call	0xb8	; 0xb8 <Dio_ChannelRead>
- 196:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
-}
- 19a:	df 91       	pop	r29
- 19c:	cf 91       	pop	r28
- 19e:	1f 91       	pop	r17
- 1a0:	08 95       	ret
+ 17e:	40 e0       	ldi	r20, 0x00	; 0
+ 180:	0e 94 3e 00 	call	0x7c	; 0x7c <Dio_ChannelDirectionSet>
+ 184:	08 95       	ret
 
-000001a2 <Sw_StateGet>:
+00000186 <Sw_StateGet>:
+}
 Sw_StateEnum_t Sw_StateGet(volatile uint8 *Sw_Reg, SwEnumt_t Sw_no)
 {
- 1a2:	1f 93       	push	r17
- 1a4:	cf 93       	push	r28
- 1a6:	df 93       	push	r29
- 1a8:	ec 01       	movw	r28, r24
- 1aa:	16 2f       	mov	r17, r22
+ 186:	1f 93       	push	r17
+ 188:	cf 93       	push	r28
+ 18a:	df 93       	push	r29
+ 18c:	ec 01       	movw	r28, r24
+ 18e:	16 2f       	mov	r17, r22
 	Sw_StateEnum_t LocalSwState = SW_RELEASED;
 	
 	if(Sw_PrevState != Dio_ChannelRead(Sw_Reg, Sw_no))
- 1ac:	0e 94 5c 00 	call	0xb8	; 0xb8 <Dio_ChannelRead>
- 1b0:	90 91 60 00 	lds	r25, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
- 1b4:	89 17       	cp	r24, r25
- 1b6:	91 f0       	breq	.+36     	; 0x1dc <Sw_StateGet+0x3a>
+ 190:	0e 94 5c 00 	call	0xb8	; 0xb8 <Dio_ChannelRead>
+ 194:	90 91 60 00 	lds	r25, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 198:	89 17       	cp	r24, r25
+ 19a:	91 f0       	breq	.+36     	; 0x1c0 <Sw_StateGet+0x3a>
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 1b8:	2f ef       	ldi	r18, 0xFF	; 255
- 1ba:	89 ef       	ldi	r24, 0xF9	; 249
- 1bc:	90 e0       	ldi	r25, 0x00	; 0
- 1be:	21 50       	subi	r18, 0x01	; 1
- 1c0:	80 40       	sbci	r24, 0x00	; 0
- 1c2:	90 40       	sbci	r25, 0x00	; 0
- 1c4:	e1 f7       	brne	.-8      	; 0x1be <Sw_StateGet+0x1c>
- 1c6:	00 c0       	rjmp	.+0      	; 0x1c8 <Sw_StateGet+0x26>
- 1c8:	00 00       	nop
+ 19c:	2f ef       	ldi	r18, 0xFF	; 255
+ 19e:	89 ef       	ldi	r24, 0xF9	; 249
+ 1a0:	90 e0       	ldi	r25, 0x00	; 0
+ 1a2:	21 50       	subi	r18, 0x01	; 1
+ 1a4:	80 40       	sbci	r24, 0x00	; 0
+ 1a6:	90 40       	sbci	r25, 0x00	; 0
+ 1a8:	e1 f7       	brne	.-8      	; 0x1a2 <Sw_StateGet+0x1c>
+ 1aa:	00 c0       	rjmp	.+0      	; 0x1ac <Sw_StateGet+0x26>
+ 1ac:	00 00       	nop
 	{
 		_delay_ms(DEBOUNCE_PERIOD);
 
 		Sw_PrevState = Dio_ChannelRead(Sw_Reg, Sw_no);
- 1ca:	61 2f       	mov	r22, r17
- 1cc:	ce 01       	movw	r24, r28
- 1ce:	0e 94 5c 00 	call	0xb8	; 0xb8 <Dio_ChannelRead>
- 1d2:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 1ae:	61 2f       	mov	r22, r17
+ 1b0:	ce 01       	movw	r24, r28
+ 1b2:	0e 94 5c 00 	call	0xb8	; 0xb8 <Dio_ChannelRead>
+ 1b6:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
 		if (Sw_PrevState == DIO_HIGH)
- 1d6:	81 30       	cpi	r24, 0x01	; 1
- 1d8:	19 f4       	brne	.+6      	; 0x1e0 <Sw_StateGet+0x3e>
- 1da:	03 c0       	rjmp	.+6      	; 0x1e2 <Sw_StateGet+0x40>
+ 1ba:	81 30       	cpi	r24, 0x01	; 1
+ 1bc:	19 f4       	brne	.+6      	; 0x1c4 <Sw_StateGet+0x3e>
+ 1be:	03 c0       	rjmp	.+6      	; 0x1c6 <Sw_StateGet+0x40>
+{
 	Dio_ChannelDirectionSet(Sw_Reg, Sw_no, DIO_INPUT);
-    Sw_PrevState = Dio_ChannelRead(Sw_Reg, Sw_no);
 }
 Sw_StateEnum_t Sw_StateGet(volatile uint8 *Sw_Reg, SwEnumt_t Sw_no)
 {
 	Sw_StateEnum_t LocalSwState = SW_RELEASED;
- 1dc:	80 e0       	ldi	r24, 0x00	; 0
- 1de:	01 c0       	rjmp	.+2      	; 0x1e2 <Sw_StateGet+0x40>
+ 1c0:	80 e0       	ldi	r24, 0x00	; 0
+ 1c2:	01 c0       	rjmp	.+2      	; 0x1c6 <Sw_StateGet+0x40>
 		{
 			LocalSwState = SW_PRESSED;
 		}
 		else
 		{
 			LocalSwState = SW_RELEASED;
- 1e0:	80 e0       	ldi	r24, 0x00	; 0
+ 1c4:	80 e0       	ldi	r24, 0x00	; 0
 		}
 	}
 	return LocalSwState;
 }
- 1e2:	df 91       	pop	r29
- 1e4:	cf 91       	pop	r28
- 1e6:	1f 91       	pop	r17
- 1e8:	08 95       	ret
+ 1c6:	df 91       	pop	r29
+ 1c8:	cf 91       	pop	r28
+ 1ca:	1f 91       	pop	r17
+ 1cc:	08 95       	ret
 
-000001ea <_exit>:
- 1ea:	f8 94       	cli
+000001ce <_exit>:
+ 1ce:	f8 94       	cli
 
-000001ec <__stop_program>:
- 1ec:	ff cf       	rjmp	.-2      	; 0x1ec <__stop_program>
+000001d0 <__stop_program>:
+ 1d0:	ff cf       	rjmp	.-2      	; 0x1d0 <__stop_program>

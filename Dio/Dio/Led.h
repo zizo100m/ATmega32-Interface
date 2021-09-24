@@ -10,6 +10,9 @@
 #define LED_H_
 
 #include "Dio.h"
+ 
+#define LED0_1DIR_REG      (PORTC_DIR_REG)
+#define LED_OUT_REG      (PORTC_OUT_REG)
 
 typedef enum
 {
@@ -20,9 +23,9 @@ typedef enum
 
 typedef enum
 {
-	LED0,
-	LED1,
-	LED2	
+	LED0 = DIO_PIN2,
+	LED1 = DIO_PIN7,
+	LED2 = DIO_PIN3	
 }LedEnum_t;
 
 void Led_Init(volatile uint8 *Led_reg, LedEnum_t Led_no);

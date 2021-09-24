@@ -5,11 +5,6 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_clear_bss.o)
                               Sw.o (__do_clear_bss)
 
-Allocating common symbols
-Common symbol       size              file
-
-Sw_PrevState        0x1               Sw.o
-
 Discarded input sections
 
  .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega32a/avr5/crtatmega32a.o
@@ -191,7 +186,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x1ee
+.text           0x00000000      0x1d2
  *(.vectors)
  .vectors       0x00000000       0x54 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega32a/avr5/crtatmega32a.o
                 0x00000000                __vector_default
@@ -291,16 +286,16 @@ END GROUP
                 0x0000013e                Led_StateSet
  .text.main     0x0000014e       0x30 main.o
                 0x0000014e                main
- .text.Sw_init  0x0000017e       0x24 Sw.o
+ .text.Sw_init  0x0000017e        0x8 Sw.o
                 0x0000017e                Sw_init
  .text.Sw_StateGet
-                0x000001a2       0x48 Sw.o
-                0x000001a2                Sw_StateGet
-                0x000001ea                . = ALIGN (0x2)
+                0x00000186       0x48 Sw.o
+                0x00000186                Sw_StateGet
+                0x000001ce                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000001ea        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x000001ea                _exit
-                0x000001ea                exit
+ .fini9         0x000001ce        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x000001ce                _exit
+                0x000001ce                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -319,11 +314,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000001ea        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x000001ce        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000001ee                _etext = .
+                0x000001d2                _etext = .
 
-.data           0x00800060        0x0 load address 0x000001ee
+.data           0x00800060        0x0 load address 0x000001d2
                 [!provide]                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -339,12 +334,13 @@ END GROUP
                 0x00800060                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- *(COMMON)
- COMMON         0x00800060        0x1 Sw.o
+ .bss.Sw_PrevState
+                0x00800060        0x1 Sw.o
                 0x00800060                Sw_PrevState
+ *(COMMON)
                 0x00800061                PROVIDE (__bss_end, .)
-                0x000001ee                __data_load_start = LOADADDR (.data)
-                0x000001ee                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000001d2                __data_load_start = LOADADDR (.data)
+                0x000001d2                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800061        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -432,13 +428,13 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0xe3a
+.debug_info     0x00000000      0xe5a
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x4e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega32a/avr5/crtatmega32a.o
  .debug_info    0x000004e6      0x2a2 Dio.o
  .debug_info    0x00000788      0x1ee Led.o
  .debug_info    0x00000976      0x1f7 main.o
- .debug_info    0x00000b6d      0x2cd Sw.o
+ .debug_info    0x00000b6d      0x2ed Sw.o
 
 .debug_abbrev   0x00000000      0x86c
  *(.debug_abbrev)
@@ -448,20 +444,20 @@ END GROUP
  .debug_abbrev  0x00000636       0xc9 main.o
  .debug_abbrev  0x000006ff      0x16d Sw.o
 
-.debug_line     0x00000000      0x473
+.debug_line     0x00000000      0x467
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x116 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega32a/avr5/crtatmega32a.o
  .debug_line    0x00000116       0xf4 Dio.o
  .debug_line    0x0000020a       0x81 Led.o
  .debug_line    0x0000028b       0x77 main.o
- .debug_line    0x00000302      0x171 Sw.o
+ .debug_line    0x00000302      0x165 Sw.o
 
-.debug_frame    0x00000000      0x120
+.debug_frame    0x00000000      0x110
  *(.debug_frame)
  .debug_frame   0x00000000       0x74 Dio.o
  .debug_frame   0x00000074       0x34 Led.o
  .debug_frame   0x000000a8       0x24 main.o
- .debug_frame   0x000000cc       0x54 Sw.o
+ .debug_frame   0x000000cc       0x44 Sw.o
 
 .debug_str      0x00000000      0x587
  *(.debug_str)
@@ -473,14 +469,14 @@ END GROUP
  .debug_str     0x000004b4       0x54 main.o
                                 0x224 (size before relaxing)
  .debug_str     0x00000508       0x7f Sw.o
-                                0x2aa (size before relaxing)
+                                0x2f2 (size before relaxing)
 
-.debug_loc      0x00000000      0x379
+.debug_loc      0x00000000      0x322
  *(.debug_loc)
  .debug_loc     0x00000000       0xc4 Dio.o
  .debug_loc     0x000000c4       0xff Led.o
  .debug_loc     0x000001c3       0x13 main.o
- .debug_loc     0x000001d6      0x1a3 Sw.o
+ .debug_loc     0x000001d6      0x14c Sw.o
 
 .debug_macinfo
  *(.debug_macinfo)

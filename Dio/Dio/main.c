@@ -15,7 +15,7 @@
 
 int main(void)
 {
-	Led_Init(PORTC_DIR_REG, LED2);
+	Led_Init(PORTC_DIR_REG, LED0);
 	Sw_init(PORTD_DIR_REG, SW2);
 	
     /* Replace with your application code */
@@ -24,7 +24,7 @@ int main(void)
 		Sw_StateEnum_t  Sw_State = Sw_StateGet(PORTD_INP_REG,SW2);
 		if(Sw_State == SW_PRESSED)
 		{
-			Led_StateSet(PORTC_OUT_REG, LED2, LED_TOGGLE);
+			Led_StateSet(PORTC_OUT_REG, LED0, LED_TOGGLE);
 		}
 		else
 		{
