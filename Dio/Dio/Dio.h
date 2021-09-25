@@ -23,7 +23,7 @@ typedef enum
     DIO_PIN4,
     DIO_PIN5,
     DIO_PIN6,
-    DIO_PIN7,
+    DIO_PIN7
 }DioPinEnum_t;
 
 /**

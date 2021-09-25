@@ -10,6 +10,11 @@
 #ifndef SW_H_
 #define SW_H_
 
+#define SW0_DIR_REG   (PORTB_DIR_REG)
+#define SW0_INP_REG   (PORTB_INP_REG)
+
+#define SW1_2_DIR_REG (PORTD_DIR_REG)
+#define SW1_2_INP_REG (PORTD_INP_REG)
 
 typedef enum
 {
@@ -17,7 +22,7 @@ typedef enum
 	SW_PRESSED	
 }Sw_StateEnum_t;
 
-typedef enum
+typedef enum   
 {
 	SW0 = DIO_PIN0,
 	SW1 = DIO_PIN6,

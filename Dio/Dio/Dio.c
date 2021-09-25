@@ -60,4 +60,4 @@ uint8 Dio_PortRead(volatile uint8 * Port_reg)
 {
 	uint8 u8LocalPortValue = *Port_reg;
 	return u8LocalPortValue;
-}
+}  

@@ -254,12 +254,12 @@ void Led_StateSet(volatile uint8 *Led_reg, LedEnum_t Led_no, LedStateEnum_t stat
 
 int main(void)
 {
-	Led_Init(PORTC_DIR_REG, LED0);
- 14e:	62 e0       	ldi	r22, 0x02	; 2
- 150:	84 e3       	ldi	r24, 0x34	; 52
+	Led_Init(LED2_DIR_REG, LED2);
+ 14e:	63 e0       	ldi	r22, 0x03	; 3
+ 150:	81 e3       	ldi	r24, 0x31	; 49
  152:	90 e0       	ldi	r25, 0x00	; 0
  154:	0e 94 9b 00 	call	0x136	; 0x136 <Led_Init>
-	Sw_init(PORTD_DIR_REG, SW2);
+	Sw_init(SW1_2_DIR_REG, SW2);
  158:	62 e0       	ldi	r22, 0x02	; 2
  15a:	81 e3       	ldi	r24, 0x31	; 49
  15c:	90 e0       	ldi	r25, 0x00	; 0
@@ -268,7 +268,7 @@ int main(void)
     /* Replace with your application code */
     while (1) 
     {
-		Sw_StateEnum_t  Sw_State = Sw_StateGet(PORTD_INP_REG,SW2);
+		Sw_StateEnum_t  Sw_State = Sw_StateGet(SW1_2_INP_REG,SW2);
  162:	62 e0       	ldi	r22, 0x02	; 2
  164:	80 e3       	ldi	r24, 0x30	; 48
  166:	90 e0       	ldi	r25, 0x00	; 0
@@ -277,10 +277,10 @@ int main(void)
  16c:	81 30       	cpi	r24, 0x01	; 1
  16e:	c9 f7       	brne	.-14     	; 0x162 <main+0x14>
 		{
-			Led_StateSet(PORTC_OUT_REG, LED0, LED_TOGGLE);
+			Led_StateSet(LED2_OUT_REG, LED2, LED_TOGGLE);
  170:	42 e0       	ldi	r20, 0x02	; 2
- 172:	62 e0       	ldi	r22, 0x02	; 2
- 174:	85 e3       	ldi	r24, 0x35	; 53
+ 172:	63 e0       	ldi	r22, 0x03	; 3
+ 174:	82 e3       	ldi	r24, 0x32	; 50
  176:	90 e0       	ldi	r25, 0x00	; 0
  178:	0e 94 9f 00 	call	0x13e	; 0x13e <Led_StateSet>
  17c:	f2 cf       	rjmp	.-28     	; 0x162 <main+0x14>
@@ -291,7 +291,7 @@ int main(void)
 DioPinStateEnum_t Sw_PrevState = SW_RELEASED;
 void Sw_init(volatile uint8 *Sw_Reg, SwEnumt_t Sw_no)
 {
-	Dio_ChannelDirectionSet(Sw_Reg, Sw_no, DIO_INPUT);
+	Dio_ChannelDirectionSet   (Sw_Reg, Sw_no, DIO_INPUT);
  17e:	40 e0       	ldi	r20, 0x00	; 0
  180:	0e 94 3e 00 	call	0x7c	; 0x7c <Dio_ChannelDirectionSet>
  184:	08 95       	ret
@@ -340,7 +340,7 @@ Sw_StateEnum_t Sw_StateGet(volatile uint8 *Sw_Reg, SwEnumt_t Sw_no)
  1bc:	19 f4       	brne	.+6      	; 0x1c4 <Sw_StateGet+0x3e>
  1be:	03 c0       	rjmp	.+6      	; 0x1c6 <Sw_StateGet+0x40>
 {
-	Dio_ChannelDirectionSet(Sw_Reg, Sw_no, DIO_INPUT);
+	Dio_ChannelDirectionSet   (Sw_Reg, Sw_no, DIO_INPUT);
 }
 Sw_StateEnum_t Sw_StateGet(volatile uint8 *Sw_Reg, SwEnumt_t Sw_no)
 {

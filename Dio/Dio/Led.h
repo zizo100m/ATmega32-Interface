@@ -11,8 +11,11 @@
 
 #include "Dio.h"
  
-#define LED0_1DIR_REG      (PORTC_DIR_REG)
-#define LED_OUT_REG      (PORTC_OUT_REG)
+#define LED0_1_DIR_REG      (PORTC_DIR_REG)
+#define LED0_1_OUT_REG      (PORTC_OUT_REG)
+
+#define LED2_DIR_REG        (PORTD_DIR_REG)
+#define LED2_OUT_REG        (PORTD_OUT_REG)
 
 typedef enum
 {
