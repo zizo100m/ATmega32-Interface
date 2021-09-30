@@ -25,9 +25,9 @@ void LCD_Init(void)
 #else
 	/* !Comment: Set the Direction of the Upper 4 Data pins to OUTPUT   */
 	*LCD_DATA_DIR_REG |= (0xF0U);
+	LCD_Send_Instruction(LCD_RETURN_HOME);
 #endif
 	/* !Comment: Set the initial configurations you made in the config file  */
-	LCD_Send_Instruction(LCD_RETURN_HOME);
 	LCD_Send_Instruction(LCD_FUNCTION_SET);
 	LCD_Send_Instruction(LCD_DISPLAY_ON);
 	LCD_Send_Instruction(LCD_CLEAR_DISPLAY);
