@@ -4,7 +4,9 @@
 
 Dio.c
 
-LCD.c
-
 main.c
+
+StepperMotor.c
+
+Sw.c
 
