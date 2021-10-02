@@ -3,31 +3,31 @@ StepperMotor.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         0000022e  00000000  00000000  00000094  2**1
+  0 .text         00000220  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000008  00800060  0000022e  000002c2  2**0
+  1 .data         00000004  00800060  00000220  000002b4  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          00000001  00800068  00800068  000002ca  2**0
+  2 .bss          00000001  00800064  00800064  000002b8  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  000002ca  2**0
+  3 .comment      00000030  00000000  00000000  000002b8  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000002fc  2**2
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000002e8  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 000000c0  00000000  00000000  00000338  2**0
+  5 .debug_aranges 000000c0  00000000  00000000  00000324  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000f3f  00000000  00000000  000003f8  2**0
+  6 .debug_info   00000ef2  00000000  00000000  000003e4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000008f2  00000000  00000000  00001337  2**0
+  7 .debug_abbrev 000008d6  00000000  00000000  000012d6  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000005cc  00000000  00000000  00001c29  2**0
+  8 .debug_line   000005e0  00000000  00000000  00001bac  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000130  00000000  00000000  000021f8  2**2
+  9 .debug_frame  00000120  00000000  00000000  0000218c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000005b0  00000000  00000000  00002328  2**0
+ 10 .debug_str    000005bb  00000000  00000000  000022ac  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000322  00000000  00000000  000028d8  2**0
+ 11 .debug_loc    000002de  00000000  00000000  00002867  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000080  00000000  00000000  00002bfa  2**0
+ 12 .debug_ranges 00000080  00000000  00000000  00002b45  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -67,18 +67,18 @@ Disassembly of section .text:
   60:	10 e0       	ldi	r17, 0x00	; 0
   62:	a0 e6       	ldi	r26, 0x60	; 96
   64:	b0 e0       	ldi	r27, 0x00	; 0
-  66:	ee e2       	ldi	r30, 0x2E	; 46
+  66:	e0 e2       	ldi	r30, 0x20	; 32
   68:	f2 e0       	ldi	r31, 0x02	; 2
   6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
   6c:	05 90       	lpm	r0, Z+
   6e:	0d 92       	st	X+, r0
-  70:	a8 36       	cpi	r26, 0x68	; 104
+  70:	a4 36       	cpi	r26, 0x64	; 100
   72:	b1 07       	cpc	r27, r17
   74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
 
 00000076 <__do_clear_bss>:
   76:	20 e0       	ldi	r18, 0x00	; 0
-  78:	a8 e6       	ldi	r26, 0x68	; 104
+  78:	a4 e6       	ldi	r26, 0x64	; 100
   7a:	b0 e0       	ldi	r27, 0x00	; 0
   7c:	01 c0       	rjmp	.+2      	; 0x80 <.do_clear_bss_start>
 
@@ -86,27 +86,30 @@ Disassembly of section .text:
   7e:	1d 92       	st	X+, r1
 
 00000080 <.do_clear_bss_start>:
-  80:	a9 36       	cpi	r26, 0x69	; 105
+  80:	a5 36       	cpi	r26, 0x65	; 101
   82:	b2 07       	cpc	r27, r18
   84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
-  86:	0e 94 7f 00 	call	0xfe	; 0xfe <main>
-  8a:	0c 94 15 01 	jmp	0x22a	; 0x22a <_exit>
+  86:	0e 94 7c 00 	call	0xf8	; 0xf8 <main>
+  8a:	0c 94 0e 01 	jmp	0x21c	; 0x21c <_exit>
 
 0000008e <__bad_interrupt>:
   8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 00000092 <Dio_ChannelDirectionSet>:
-		break;
-	}	
-}
-void Dio_ChannelToggle(volatile uint8 * Port_reg, DioPinEnum_t Channel)
+#include "ATmega32_Cfg.h"
+
+void Dio_ChannelDirectionSet(volatile uint8 * Port_reg, DioPinEnum_t Channel, DioPinDirectionEnum_t Direction)
 {
-	TOGGLE_BIT(*Port_reg,Channel);
+
+	switch(Direction)
   92:	44 23       	and	r20, r20
   94:	19 f0       	breq	.+6      	; 0x9c <Dio_ChannelDirectionSet+0xa>
   96:	41 30       	cpi	r20, 0x01	; 1
   98:	71 f0       	breq	.+28     	; 0xb6 <Dio_ChannelDirectionSet+0x24>
   9a:	08 95       	ret
+	{
+		case DIO_INPUT:
+		CLEAR_BIT(*Port_reg,Channel);
   9c:	fc 01       	movw	r30, r24
   9e:	40 81       	ld	r20, Z
   a0:	21 e0       	ldi	r18, 0x01	; 1
@@ -119,7 +122,10 @@ void Dio_ChannelToggle(volatile uint8 * Port_reg, DioPinEnum_t Channel)
   ae:	20 95       	com	r18
   b0:	24 23       	and	r18, r20
   b2:	20 83       	st	Z, r18
+		break;
   b4:	08 95       	ret
+		case DIO_OUTPUT:
+		SET_BIT(*Port_reg,Channel);
   b6:	fc 01       	movw	r30, r24
   b8:	40 81       	ld	r20, Z
   ba:	21 e0       	ldi	r18, 0x01	; 1
@@ -134,6 +140,12 @@ void Dio_ChannelToggle(volatile uint8 * Port_reg, DioPinEnum_t Channel)
   cc:	08 95       	ret
 
 000000ce <Dio_ChannelRead>:
+	}
+}
+
+DioPinStateEnum_t Dio_ChannelRead(volatile uint8 * Port_reg, DioPinEnum_t Channel)
+{
+	DioPinStateEnum_t u8LocalPinValue = READ_BIT(*Port_reg,Channel);
   ce:	fc 01       	movw	r30, r24
   d0:	40 81       	ld	r20, Z
   d2:	81 e0       	ldi	r24, 0x01	; 1
@@ -154,280 +166,279 @@ void Dio_ChannelToggle(volatile uint8 * Port_reg, DioPinEnum_t Channel)
   f0:	87 95       	ror	r24
   f2:	6a 95       	dec	r22
   f4:	e2 f7       	brpl	.-8      	; 0xee <Dio_ChannelRead+0x20>
+	return (u8LocalPinValue);
+}
   f6:	08 95       	ret
 
-000000f8 <Dio_PortWrite>:
-}
-
-void Dio_PortWrite(volatile uint8 * Port_reg, uint8 Value)
-{
-	*Port_reg = Value;
-  f8:	fc 01       	movw	r30, r24
-  fa:	60 83       	st	Z, r22
-  fc:	08 95       	ret
-
-000000fe <main>:
+000000f8 <main>:
+#include "StepperMotor.h"
 #include "Sw.h"
-#include <util/delay.h>
 
 int main(void)
 {
-    StepperMotor_Init();
-  fe:	0e 94 a0 00 	call	0x140	; 0x140 <StepperMotor_Init>
+	StepperMotor_Init();
+  f8:	0e 94 9d 00 	call	0x13a	; 0x13a <StepperMotor_Init>
 	Sw_init(SW1_2_DIR_REG, SW1);
- 102:	66 e0       	ldi	r22, 0x06	; 6
- 104:	81 e3       	ldi	r24, 0x31	; 49
- 106:	90 e0       	ldi	r25, 0x00	; 0
- 108:	0e 94 ed 00 	call	0x1da	; 0x1da <Sw_init>
+  fc:	66 e0       	ldi	r22, 0x06	; 6
+  fe:	81 e3       	ldi	r24, 0x31	; 49
+ 100:	90 e0       	ldi	r25, 0x00	; 0
+ 102:	0e 94 e6 00 	call	0x1cc	; 0x1cc <Sw_init>
 	Sw_init(SW1_2_DIR_REG, SW2);
- 10c:	62 e0       	ldi	r22, 0x02	; 2
- 10e:	81 e3       	ldi	r24, 0x31	; 49
- 110:	90 e0       	ldi	r25, 0x00	; 0
- 112:	0e 94 ed 00 	call	0x1da	; 0x1da <Sw_init>
- 116:	02 c0       	rjmp	.+4      	; 0x11c <main+0x1e>
-    while (1) 
-    {
+ 106:	62 e0       	ldi	r22, 0x02	; 2
+ 108:	81 e3       	ldi	r24, 0x31	; 49
+ 10a:	90 e0       	ldi	r25, 0x00	; 0
+ 10c:	0e 94 e6 00 	call	0x1cc	; 0x1cc <Sw_init>
+ 110:	02 c0       	rjmp	.+4      	; 0x116 <main+0x1e>
+	while (1)
+	{
 		while(Sw_StateGet(SW1_2_INP_REG, SW1) == SW_PRESSED)
 		{
 			StepperMotor_TurnCW();
- 118:	0e 94 b9 00 	call	0x172	; 0x172 <StepperMotor_TurnCW>
-    StepperMotor_Init();
+ 112:	0e 94 b6 00 	call	0x16c	; 0x16c <StepperMotor_TurnCW>
+	StepperMotor_Init();
 	Sw_init(SW1_2_DIR_REG, SW1);
 	Sw_init(SW1_2_DIR_REG, SW2);
-    while (1) 
-    {
+	while (1)
+	{
 		while(Sw_StateGet(SW1_2_INP_REG, SW1) == SW_PRESSED)
- 11c:	66 e0       	ldi	r22, 0x06	; 6
- 11e:	80 e3       	ldi	r24, 0x30	; 48
- 120:	90 e0       	ldi	r25, 0x00	; 0
- 122:	0e 94 f1 00 	call	0x1e2	; 0x1e2 <Sw_StateGet>
- 126:	81 30       	cpi	r24, 0x01	; 1
- 128:	19 f4       	brne	.+6      	; 0x130 <main+0x32>
- 12a:	f6 cf       	rjmp	.-20     	; 0x118 <main+0x1a>
+ 116:	66 e0       	ldi	r22, 0x06	; 6
+ 118:	80 e3       	ldi	r24, 0x30	; 48
+ 11a:	90 e0       	ldi	r25, 0x00	; 0
+ 11c:	0e 94 ea 00 	call	0x1d4	; 0x1d4 <Sw_StateGet>
+ 120:	81 30       	cpi	r24, 0x01	; 1
+ 122:	19 f4       	brne	.+6      	; 0x12a <main+0x32>
+ 124:	f6 cf       	rjmp	.-20     	; 0x112 <main+0x1a>
 		{
 			StepperMotor_TurnCW();
 		}
 		while(Sw_StateGet(SW1_2_INP_REG, SW2) == SW_PRESSED)
 		{
 			StepperMotor_TurnCCW();
- 12c:	0e 94 d3 00 	call	0x1a6	; 0x1a6 <StepperMotor_TurnCCW>
-    {
+ 126:	0e 94 cd 00 	call	0x19a	; 0x19a <StepperMotor_TurnCCW>
+	{
 		while(Sw_StateGet(SW1_2_INP_REG, SW1) == SW_PRESSED)
 		{
 			StepperMotor_TurnCW();
 		}
 		while(Sw_StateGet(SW1_2_INP_REG, SW2) == SW_PRESSED)
- 130:	62 e0       	ldi	r22, 0x02	; 2
- 132:	80 e3       	ldi	r24, 0x30	; 48
- 134:	90 e0       	ldi	r25, 0x00	; 0
- 136:	0e 94 f1 00 	call	0x1e2	; 0x1e2 <Sw_StateGet>
- 13a:	81 30       	cpi	r24, 0x01	; 1
- 13c:	b9 f3       	breq	.-18     	; 0x12c <main+0x2e>
- 13e:	ee cf       	rjmp	.-36     	; 0x11c <main+0x1e>
+ 12a:	62 e0       	ldi	r22, 0x02	; 2
+ 12c:	80 e3       	ldi	r24, 0x30	; 48
+ 12e:	90 e0       	ldi	r25, 0x00	; 0
+ 130:	0e 94 ea 00 	call	0x1d4	; 0x1d4 <Sw_StateGet>
+ 134:	81 30       	cpi	r24, 0x01	; 1
+ 136:	b9 f3       	breq	.-18     	; 0x126 <main+0x2e>
+ 138:	ee cf       	rjmp	.-36     	; 0x116 <main+0x1e>
 
-00000140 <StepperMotor_Init>:
-uint8 gau8StepperRotation_CCW[4U] = {0x80U, 0x40U, 0x20U, 0x10U};	
+0000013a <StepperMotor_Init>:
+uint8 gau8StepperRotation[STEPPER_MOTOR_COILS_NUM] = {0x01U, 0x02U, 0x04U, 0x08U};
+#endif		
 
 void StepperMotor_Init(void)
 {
-	/* !Comment: Initialize the 4 pins of the Stepper Motor to be OUTPUT */
 	Dio_ChannelDirectionSet(STEPPER_MOTOR_DIR_REG, STEPPER_MOTOR_IN1_PIN, DIO_OUTPUT);
- 140:	41 e0       	ldi	r20, 0x01	; 1
- 142:	64 e0       	ldi	r22, 0x04	; 4
- 144:	8a e3       	ldi	r24, 0x3A	; 58
- 146:	90 e0       	ldi	r25, 0x00	; 0
- 148:	0e 94 49 00 	call	0x92	; 0x92 <Dio_ChannelDirectionSet>
+ 13a:	41 e0       	ldi	r20, 0x01	; 1
+ 13c:	64 e0       	ldi	r22, 0x04	; 4
+ 13e:	8a e3       	ldi	r24, 0x3A	; 58
+ 140:	90 e0       	ldi	r25, 0x00	; 0
+ 142:	0e 94 49 00 	call	0x92	; 0x92 <Dio_ChannelDirectionSet>
 	Dio_ChannelDirectionSet(STEPPER_MOTOR_DIR_REG, STEPPER_MOTOR_IN2_PIN, DIO_OUTPUT);
- 14c:	41 e0       	ldi	r20, 0x01	; 1
- 14e:	65 e0       	ldi	r22, 0x05	; 5
- 150:	8a e3       	ldi	r24, 0x3A	; 58
- 152:	90 e0       	ldi	r25, 0x00	; 0
- 154:	0e 94 49 00 	call	0x92	; 0x92 <Dio_ChannelDirectionSet>
+ 146:	41 e0       	ldi	r20, 0x01	; 1
+ 148:	65 e0       	ldi	r22, 0x05	; 5
+ 14a:	8a e3       	ldi	r24, 0x3A	; 58
+ 14c:	90 e0       	ldi	r25, 0x00	; 0
+ 14e:	0e 94 49 00 	call	0x92	; 0x92 <Dio_ChannelDirectionSet>
 	Dio_ChannelDirectionSet(STEPPER_MOTOR_DIR_REG, STEPPER_MOTOR_IN3_PIN, DIO_OUTPUT);
- 158:	41 e0       	ldi	r20, 0x01	; 1
- 15a:	66 e0       	ldi	r22, 0x06	; 6
- 15c:	8a e3       	ldi	r24, 0x3A	; 58
- 15e:	90 e0       	ldi	r25, 0x00	; 0
- 160:	0e 94 49 00 	call	0x92	; 0x92 <Dio_ChannelDirectionSet>
+ 152:	41 e0       	ldi	r20, 0x01	; 1
+ 154:	66 e0       	ldi	r22, 0x06	; 6
+ 156:	8a e3       	ldi	r24, 0x3A	; 58
+ 158:	90 e0       	ldi	r25, 0x00	; 0
+ 15a:	0e 94 49 00 	call	0x92	; 0x92 <Dio_ChannelDirectionSet>
 	Dio_ChannelDirectionSet(STEPPER_MOTOR_DIR_REG, STEPPER_MOTOR_IN4_PIN, DIO_OUTPUT);
- 164:	41 e0       	ldi	r20, 0x01	; 1
- 166:	67 e0       	ldi	r22, 0x07	; 7
- 168:	8a e3       	ldi	r24, 0x3A	; 58
- 16a:	90 e0       	ldi	r25, 0x00	; 0
- 16c:	0e 94 49 00 	call	0x92	; 0x92 <Dio_ChannelDirectionSet>
- 170:	08 95       	ret
+ 15e:	41 e0       	ldi	r20, 0x01	; 1
+ 160:	67 e0       	ldi	r22, 0x07	; 7
+ 162:	8a e3       	ldi	r24, 0x3A	; 58
+ 164:	90 e0       	ldi	r25, 0x00	; 0
+ 166:	0e 94 49 00 	call	0x92	; 0x92 <Dio_ChannelDirectionSet>
+ 16a:	08 95       	ret
 
-00000172 <StepperMotor_TurnCW>:
+0000016c <StepperMotor_TurnCW>:
 }
-
- void StepperMotor_TurnCW(void)
- {
- 172:	cf 93       	push	r28
-	 uint8 u8LocalLoopIndex = 0;
-	 for (u8LocalLoopIndex = 0; u8LocalLoopIndex < STEPPER_MOTOR_STATES_NUM; u8LocalLoopIndex++)
- 174:	c0 e0       	ldi	r28, 0x00	; 0
- 176:	13 c0       	rjmp	.+38     	; 0x19e <StepperMotor_TurnCW+0x2c>
-	 {
-		 Dio_PortWrite(STEPPER_MOTOR_OUT_REG, gau8StepperRotation_CW[u8LocalLoopIndex]);
- 178:	ec 2f       	mov	r30, r28
+void StepperMotor_TurnCW(void)
+{
+	uint8 u8LocalLoopIndex;
+	for (u8LocalLoopIndex = 0U; u8LocalLoopIndex < STEPPER_MOTOR_COILS_NUM; u8LocalLoopIndex++)
+ 16c:	80 e0       	ldi	r24, 0x00	; 0
+ 16e:	12 c0       	rjmp	.+36     	; 0x194 <StepperMotor_TurnCW+0x28>
+	{
+#if STEPPER_UPPER_PORT
+		*STEPPER_MOTOR_OUT_REG &= 0x0FU;
+ 170:	9b b3       	in	r25, 0x1b	; 27
+ 172:	9f 70       	andi	r25, 0x0F	; 15
+ 174:	9b bb       	out	0x1b, r25	; 27
+#else
+		*STEPPER_MOTOR_OUT_REG &= 0xF0U;
+#endif
+		*STEPPER_MOTOR_OUT_REG |= gau8StepperRotation[u8LocalLoopIndex]; 
+ 176:	2b b3       	in	r18, 0x1b	; 27
+ 178:	e8 2f       	mov	r30, r24
  17a:	f0 e0       	ldi	r31, 0x00	; 0
- 17c:	ec 59       	subi	r30, 0x9C	; 156
+ 17c:	e0 5a       	subi	r30, 0xA0	; 160
  17e:	ff 4f       	sbci	r31, 0xFF	; 255
- 180:	60 81       	ld	r22, Z
- 182:	8b e3       	ldi	r24, 0x3B	; 59
- 184:	90 e0       	ldi	r25, 0x00	; 0
- 186:	0e 94 7c 00 	call	0xf8	; 0xf8 <Dio_PortWrite>
+ 180:	90 81       	ld	r25, Z
+ 182:	92 2b       	or	r25, r18
+ 184:	9b bb       	out	0x1b, r25	; 27
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 18a:	2f ef       	ldi	r18, 0xFF	; 255
- 18c:	80 e7       	ldi	r24, 0x70	; 112
- 18e:	92 e0       	ldi	r25, 0x02	; 2
- 190:	21 50       	subi	r18, 0x01	; 1
- 192:	80 40       	sbci	r24, 0x00	; 0
- 194:	90 40       	sbci	r25, 0x00	; 0
- 196:	e1 f7       	brne	.-8      	; 0x190 <StepperMotor_TurnCW+0x1e>
- 198:	00 c0       	rjmp	.+0      	; 0x19a <StepperMotor_TurnCW+0x28>
- 19a:	00 00       	nop
+ 186:	ef e1       	ldi	r30, 0x1F	; 31
+ 188:	fe e4       	ldi	r31, 0x4E	; 78
+ 18a:	31 97       	sbiw	r30, 0x01	; 1
+ 18c:	f1 f7       	brne	.-4      	; 0x18a <StepperMotor_TurnCW+0x1e>
+ 18e:	00 c0       	rjmp	.+0      	; 0x190 <StepperMotor_TurnCW+0x24>
+ 190:	00 00       	nop
+	Dio_ChannelDirectionSet(STEPPER_MOTOR_DIR_REG, STEPPER_MOTOR_IN4_PIN, DIO_OUTPUT);
 }
-
- void StepperMotor_TurnCW(void)
- {
-	 uint8 u8LocalLoopIndex = 0;
-	 for (u8LocalLoopIndex = 0; u8LocalLoopIndex < STEPPER_MOTOR_STATES_NUM; u8LocalLoopIndex++)
- 19c:	cf 5f       	subi	r28, 0xFF	; 255
- 19e:	c4 30       	cpi	r28, 0x04	; 4
- 1a0:	58 f3       	brcs	.-42     	; 0x178 <StepperMotor_TurnCW+0x6>
-	 {
-		 Dio_PortWrite(STEPPER_MOTOR_OUT_REG, gau8StepperRotation_CW[u8LocalLoopIndex]);
-		 _delay_ms(STEPPER_STEP_DELAY_MS);
-	 }
- }
- 1a2:	cf 91       	pop	r28
- 1a4:	08 95       	ret
-
-000001a6 <StepperMotor_TurnCCW>:
-
- void StepperMotor_TurnCCW(void)
+void StepperMotor_TurnCW(void)
 {
- 1a6:	cf 93       	push	r28
-	uint8 u8LocalLoopIndex = 0;
-	for (u8LocalLoopIndex = 0; u8LocalLoopIndex < STEPPER_MOTOR_STATES_NUM; u8LocalLoopIndex++)
- 1a8:	c0 e0       	ldi	r28, 0x00	; 0
- 1aa:	13 c0       	rjmp	.+38     	; 0x1d2 <StepperMotor_TurnCCW+0x2c>
-	{
-		Dio_PortWrite(STEPPER_MOTOR_OUT_REG, gau8StepperRotation_CCW[u8LocalLoopIndex]);
- 1ac:	ec 2f       	mov	r30, r28
- 1ae:	f0 e0       	ldi	r31, 0x00	; 0
- 1b0:	e0 5a       	subi	r30, 0xA0	; 160
- 1b2:	ff 4f       	sbci	r31, 0xFF	; 255
- 1b4:	60 81       	ld	r22, Z
- 1b6:	8b e3       	ldi	r24, 0x3B	; 59
- 1b8:	90 e0       	ldi	r25, 0x00	; 0
- 1ba:	0e 94 7c 00 	call	0xf8	; 0xf8 <Dio_PortWrite>
- 1be:	2f ef       	ldi	r18, 0xFF	; 255
- 1c0:	80 e7       	ldi	r24, 0x70	; 112
- 1c2:	92 e0       	ldi	r25, 0x02	; 2
- 1c4:	21 50       	subi	r18, 0x01	; 1
- 1c6:	80 40       	sbci	r24, 0x00	; 0
- 1c8:	90 40       	sbci	r25, 0x00	; 0
- 1ca:	e1 f7       	brne	.-8      	; 0x1c4 <StepperMotor_TurnCCW+0x1e>
- 1cc:	00 c0       	rjmp	.+0      	; 0x1ce <StepperMotor_TurnCCW+0x28>
- 1ce:	00 00       	nop
- }
-
- void StepperMotor_TurnCCW(void)
-{
-	uint8 u8LocalLoopIndex = 0;
-	for (u8LocalLoopIndex = 0; u8LocalLoopIndex < STEPPER_MOTOR_STATES_NUM; u8LocalLoopIndex++)
- 1d0:	cf 5f       	subi	r28, 0xFF	; 255
- 1d2:	c4 30       	cpi	r28, 0x04	; 4
- 1d4:	58 f3       	brcs	.-42     	; 0x1ac <StepperMotor_TurnCCW+0x6>
-	{
-		Dio_PortWrite(STEPPER_MOTOR_OUT_REG, gau8StepperRotation_CCW[u8LocalLoopIndex]);
-		_delay_ms(STEPPER_STEP_DELAY_MS);
+	uint8 u8LocalLoopIndex;
+	for (u8LocalLoopIndex = 0U; u8LocalLoopIndex < STEPPER_MOTOR_COILS_NUM; u8LocalLoopIndex++)
+ 192:	8f 5f       	subi	r24, 0xFF	; 255
+ 194:	84 30       	cpi	r24, 0x04	; 4
+ 196:	60 f3       	brcs	.-40     	; 0x170 <StepperMotor_TurnCW+0x4>
+		*STEPPER_MOTOR_OUT_REG &= 0xF0U;
+#endif
+		*STEPPER_MOTOR_OUT_REG |= gau8StepperRotation[u8LocalLoopIndex]; 
+		_delay_ms(STEPPER_MOTOR_STEP_DELAY_MS);
 	}
 }
- 1d6:	cf 91       	pop	r28
- 1d8:	08 95       	ret
+ 198:	08 95       	ret
 
-000001da <Sw_init>:
+0000019a <StepperMotor_TurnCCW>:
+void StepperMotor_TurnCCW(void)
+{
+	sint8 s8LocalLoopIndex;
+	for (s8LocalLoopIndex = (STEPPER_MOTOR_COILS_NUM -1U) ;s8LocalLoopIndex >=0 ; s8LocalLoopIndex--)
+ 19a:	83 e0       	ldi	r24, 0x03	; 3
+ 19c:	14 c0       	rjmp	.+40     	; 0x1c6 <StepperMotor_TurnCCW+0x2c>
+	{
+#if STEPPER_UPPER_PORT
+		*STEPPER_MOTOR_OUT_REG &= 0x0FU;
+ 19e:	9b b3       	in	r25, 0x1b	; 27
+ 1a0:	9f 70       	andi	r25, 0x0F	; 15
+ 1a2:	9b bb       	out	0x1b, r25	; 27
+#else
+		*STEPPER_MOTOR_OUT_REG &= 0xF0U;
+#endif
+		*STEPPER_MOTOR_OUT_REG |= gau8StepperRotation[s8LocalLoopIndex];
+ 1a4:	2b b3       	in	r18, 0x1b	; 27
+ 1a6:	e8 2f       	mov	r30, r24
+ 1a8:	08 2e       	mov	r0, r24
+ 1aa:	00 0c       	add	r0, r0
+ 1ac:	ff 0b       	sbc	r31, r31
+ 1ae:	e0 5a       	subi	r30, 0xA0	; 160
+ 1b0:	ff 4f       	sbci	r31, 0xFF	; 255
+ 1b2:	90 81       	ld	r25, Z
+ 1b4:	92 2b       	or	r25, r18
+ 1b6:	9b bb       	out	0x1b, r25	; 27
+ 1b8:	ef e1       	ldi	r30, 0x1F	; 31
+ 1ba:	fe e4       	ldi	r31, 0x4E	; 78
+ 1bc:	31 97       	sbiw	r30, 0x01	; 1
+ 1be:	f1 f7       	brne	.-4      	; 0x1bc <StepperMotor_TurnCCW+0x22>
+ 1c0:	00 c0       	rjmp	.+0      	; 0x1c2 <StepperMotor_TurnCCW+0x28>
+ 1c2:	00 00       	nop
+	}
+}
+void StepperMotor_TurnCCW(void)
+{
+	sint8 s8LocalLoopIndex;
+	for (s8LocalLoopIndex = (STEPPER_MOTOR_COILS_NUM -1U) ;s8LocalLoopIndex >=0 ; s8LocalLoopIndex--)
+ 1c4:	81 50       	subi	r24, 0x01	; 1
+ 1c6:	88 23       	and	r24, r24
+ 1c8:	54 f7       	brge	.-44     	; 0x19e <StepperMotor_TurnCCW+0x4>
+		*STEPPER_MOTOR_OUT_REG &= 0xF0U;
+#endif
+		*STEPPER_MOTOR_OUT_REG |= gau8StepperRotation[s8LocalLoopIndex];
+		_delay_ms(STEPPER_MOTOR_STEP_DELAY_MS);
+	}
+ 1ca:	08 95       	ret
+
+000001cc <Sw_init>:
 #define DEBOUNCE_PERIOD (20U)
 
 DioPinStateEnum_t Sw_PrevState = SW_RELEASED;
 void Sw_init(volatile uint8 *Sw_Reg, SwEnumt_t Sw_no)
 {
 	Dio_ChannelDirectionSet   (Sw_Reg, Sw_no, DIO_INPUT);
- 1da:	40 e0       	ldi	r20, 0x00	; 0
- 1dc:	0e 94 49 00 	call	0x92	; 0x92 <Dio_ChannelDirectionSet>
- 1e0:	08 95       	ret
+ 1cc:	40 e0       	ldi	r20, 0x00	; 0
+ 1ce:	0e 94 49 00 	call	0x92	; 0x92 <Dio_ChannelDirectionSet>
+ 1d2:	08 95       	ret
 
-000001e2 <Sw_StateGet>:
+000001d4 <Sw_StateGet>:
 }
 Sw_StateEnum_t Sw_StateGet(volatile uint8 *Sw_Reg, SwEnumt_t Sw_no)
 {
- 1e2:	1f 93       	push	r17
- 1e4:	cf 93       	push	r28
- 1e6:	df 93       	push	r29
- 1e8:	ec 01       	movw	r28, r24
- 1ea:	16 2f       	mov	r17, r22
+ 1d4:	1f 93       	push	r17
+ 1d6:	cf 93       	push	r28
+ 1d8:	df 93       	push	r29
+ 1da:	ec 01       	movw	r28, r24
+ 1dc:	16 2f       	mov	r17, r22
 	Sw_StateEnum_t LocalSwState = SW_RELEASED;
 	
 	if(Sw_PrevState != Dio_ChannelRead(Sw_Reg, Sw_no))
- 1ec:	0e 94 67 00 	call	0xce	; 0xce <Dio_ChannelRead>
- 1f0:	90 91 68 00 	lds	r25, 0x0068	; 0x800068 <__data_end>
- 1f4:	89 17       	cp	r24, r25
- 1f6:	91 f0       	breq	.+36     	; 0x21c <Sw_StateGet+0x3a>
- 1f8:	2f ef       	ldi	r18, 0xFF	; 255
- 1fa:	89 ef       	ldi	r24, 0xF9	; 249
- 1fc:	90 e0       	ldi	r25, 0x00	; 0
- 1fe:	21 50       	subi	r18, 0x01	; 1
- 200:	80 40       	sbci	r24, 0x00	; 0
- 202:	90 40       	sbci	r25, 0x00	; 0
- 204:	e1 f7       	brne	.-8      	; 0x1fe <Sw_StateGet+0x1c>
- 206:	00 c0       	rjmp	.+0      	; 0x208 <Sw_StateGet+0x26>
- 208:	00 00       	nop
+ 1de:	0e 94 67 00 	call	0xce	; 0xce <Dio_ChannelRead>
+ 1e2:	90 91 64 00 	lds	r25, 0x0064	; 0x800064 <__data_end>
+ 1e6:	89 17       	cp	r24, r25
+ 1e8:	91 f0       	breq	.+36     	; 0x20e <Sw_StateGet+0x3a>
+ 1ea:	2f ef       	ldi	r18, 0xFF	; 255
+ 1ec:	89 ef       	ldi	r24, 0xF9	; 249
+ 1ee:	90 e0       	ldi	r25, 0x00	; 0
+ 1f0:	21 50       	subi	r18, 0x01	; 1
+ 1f2:	80 40       	sbci	r24, 0x00	; 0
+ 1f4:	90 40       	sbci	r25, 0x00	; 0
+ 1f6:	e1 f7       	brne	.-8      	; 0x1f0 <Sw_StateGet+0x1c>
+ 1f8:	00 c0       	rjmp	.+0      	; 0x1fa <Sw_StateGet+0x26>
+ 1fa:	00 00       	nop
 	{
 		_delay_ms(DEBOUNCE_PERIOD);
 
 		Sw_PrevState = Dio_ChannelRead(Sw_Reg, Sw_no);
- 20a:	61 2f       	mov	r22, r17
- 20c:	ce 01       	movw	r24, r28
- 20e:	0e 94 67 00 	call	0xce	; 0xce <Dio_ChannelRead>
- 212:	80 93 68 00 	sts	0x0068, r24	; 0x800068 <__data_end>
+ 1fc:	61 2f       	mov	r22, r17
+ 1fe:	ce 01       	movw	r24, r28
+ 200:	0e 94 67 00 	call	0xce	; 0xce <Dio_ChannelRead>
+ 204:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <__data_end>
 		if (Sw_PrevState == DIO_HIGH)
- 216:	81 30       	cpi	r24, 0x01	; 1
- 218:	19 f4       	brne	.+6      	; 0x220 <Sw_StateGet+0x3e>
- 21a:	03 c0       	rjmp	.+6      	; 0x222 <Sw_StateGet+0x40>
+ 208:	81 30       	cpi	r24, 0x01	; 1
+ 20a:	19 f4       	brne	.+6      	; 0x212 <Sw_StateGet+0x3e>
+ 20c:	03 c0       	rjmp	.+6      	; 0x214 <Sw_StateGet+0x40>
 {
 	Dio_ChannelDirectionSet   (Sw_Reg, Sw_no, DIO_INPUT);
 }
 Sw_StateEnum_t Sw_StateGet(volatile uint8 *Sw_Reg, SwEnumt_t Sw_no)
 {
 	Sw_StateEnum_t LocalSwState = SW_RELEASED;
- 21c:	80 e0       	ldi	r24, 0x00	; 0
- 21e:	01 c0       	rjmp	.+2      	; 0x222 <Sw_StateGet+0x40>
+ 20e:	80 e0       	ldi	r24, 0x00	; 0
+ 210:	01 c0       	rjmp	.+2      	; 0x214 <Sw_StateGet+0x40>
 		{
 			LocalSwState = SW_PRESSED;
 		}
 		else
 		{
 			LocalSwState = SW_RELEASED;
- 220:	80 e0       	ldi	r24, 0x00	; 0
+ 212:	80 e0       	ldi	r24, 0x00	; 0
 		}
 	}
 	return LocalSwState;
 }
- 222:	df 91       	pop	r29
- 224:	cf 91       	pop	r28
- 226:	1f 91       	pop	r17
- 228:	08 95       	ret
+ 214:	df 91       	pop	r29
+ 216:	cf 91       	pop	r28
+ 218:	1f 91       	pop	r17
+ 21a:	08 95       	ret
 
-0000022a <_exit>:
- 22a:	f8 94       	cli
+0000021c <_exit>:
+ 21c:	f8 94       	cli
 
-0000022c <__stop_program>:
- 22c:	ff cf       	rjmp	.-2      	; 0x22c <__stop_program>
+0000021e <__stop_program>:
+ 21e:	ff cf       	rjmp	.-2      	; 0x21e <__stop_program>
