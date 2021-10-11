@@ -1,0 +1,507 @@
+
+Gpt.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000002b6  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000012  00800060  000002b6  0000034a  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000001  00800072  00800072  0000035c  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  0000035c  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000038c  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000118  00000000  00000000  000003c8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00001366  00000000  00000000  000004e0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000009b8  00000000  00000000  00001846  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   0000072a  00000000  00000000  000021fe  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000001cc  00000000  00000000  00002928  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000008b4  00000000  00000000  00002af4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000584  00000000  00000000  000033a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 000000b0  00000000  00000000  0000392c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+   8:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+   c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  10:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  14:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  18:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  1c:	0c 94 66 00 	jmp	0xcc	; 0xcc <__vector_7>
+  20:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  24:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  28:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  2c:	0c 94 55 00 	jmp	0xaa	; 0xaa <__vector_11>
+  30:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  34:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  38:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  3c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  40:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  44:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  48:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  4c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  50:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	e6 eb       	ldi	r30, 0xB6	; 182
+  68:	f2 e0       	ldi	r31, 0x02	; 2
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	a2 37       	cpi	r26, 0x72	; 114
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+
+00000076 <__do_clear_bss>:
+  76:	20 e0       	ldi	r18, 0x00	; 0
+  78:	a2 e7       	ldi	r26, 0x72	; 114
+  7a:	b0 e0       	ldi	r27, 0x00	; 0
+  7c:	01 c0       	rjmp	.+2      	; 0x80 <.do_clear_bss_start>
+
+0000007e <.do_clear_bss_loop>:
+  7e:	1d 92       	st	X+, r1
+
+00000080 <.do_clear_bss_start>:
+  80:	a3 37       	cpi	r26, 0x73	; 115
+  82:	b2 07       	cpc	r27, r18
+  84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
+  86:	0e 94 8e 00 	call	0x11c	; 0x11c <main>
+  8a:	0c 94 59 01 	jmp	0x2b2	; 0x2b2 <_exit>
+
+0000008e <__bad_interrupt>:
+  8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000092 <Led_Init>:
+#include "Led.h"
+#include "Dio.h"
+
+void Led_Init(volatile uint8 *Led_reg, LedEnum_t Led_no)
+{
+	Dio_ChannelDirectionSet(Led_reg, Led_no, DIO_OUTPUT);
+  92:	41 e0       	ldi	r20, 0x01	; 1
+  94:	0e 94 b0 00 	call	0x160	; 0x160 <Dio_ChannelDirectionSet>
+  98:	08 95       	ret
+
+0000009a <Led_StateSet>:
+}
+void Led_StateSet(volatile uint8 *Led_reg, LedEnum_t Led_no, LedStateEnum_t state)
+{
+	if (state == LED_TOGGLE)
+  9a:	42 30       	cpi	r20, 0x02	; 2
+  9c:	19 f4       	brne	.+6      	; 0xa4 <Led_StateSet+0xa>
+	{
+		Dio_ChannelToggle(Led_reg, Led_no);
+  9e:	0e 94 ec 00 	call	0x1d8	; 0x1d8 <Dio_ChannelToggle>
+  a2:	08 95       	ret
+	}
+	else
+	{
+		Dio_ChannelWrite(Led_reg, Led_no, state);
+  a4:	0e 94 ce 00 	call	0x19c	; 0x19c <Dio_ChannelWrite>
+  a8:	08 95       	ret
+
+000000aa <__vector_11>:
+
+#define ONE_SECOND_GPT_OVF_NUM   (244U)
+
+volatile uint8 gu8GptCounter = 0;
+ISR(TIMER0_OVF_vect)
+{
+  aa:	1f 92       	push	r1
+  ac:	0f 92       	push	r0
+  ae:	0f b6       	in	r0, 0x3f	; 63
+  b0:	0f 92       	push	r0
+  b2:	11 24       	eor	r1, r1
+  b4:	8f 93       	push	r24
+	gu8GptCounter++;
+  b6:	80 91 72 00 	lds	r24, 0x0072	; 0x800072 <__data_end>
+  ba:	8f 5f       	subi	r24, 0xFF	; 255
+  bc:	80 93 72 00 	sts	0x0072, r24	; 0x800072 <__data_end>
+}
+  c0:	8f 91       	pop	r24
+  c2:	0f 90       	pop	r0
+  c4:	0f be       	out	0x3f, r0	; 63
+  c6:	0f 90       	pop	r0
+  c8:	1f 90       	pop	r1
+  ca:	18 95       	reti
+
+000000cc <__vector_7>:
+
+ISR(TIMER1_COMPA_vect)
+{
+  cc:	1f 92       	push	r1
+  ce:	0f 92       	push	r0
+  d0:	0f b6       	in	r0, 0x3f	; 63
+  d2:	0f 92       	push	r0
+  d4:	11 24       	eor	r1, r1
+  d6:	2f 93       	push	r18
+  d8:	3f 93       	push	r19
+  da:	4f 93       	push	r20
+  dc:	5f 93       	push	r21
+  de:	6f 93       	push	r22
+  e0:	7f 93       	push	r23
+  e2:	8f 93       	push	r24
+  e4:	9f 93       	push	r25
+  e6:	af 93       	push	r26
+  e8:	bf 93       	push	r27
+  ea:	ef 93       	push	r30
+  ec:	ff 93       	push	r31
+	Led_StateSet(LED0_1_OUT_REG, LED1, LED_TOGGLE);
+  ee:	42 e0       	ldi	r20, 0x02	; 2
+  f0:	67 e0       	ldi	r22, 0x07	; 7
+  f2:	85 e3       	ldi	r24, 0x35	; 53
+  f4:	90 e0       	ldi	r25, 0x00	; 0
+  f6:	0e 94 4d 00 	call	0x9a	; 0x9a <Led_StateSet>
+}
+  fa:	ff 91       	pop	r31
+  fc:	ef 91       	pop	r30
+  fe:	bf 91       	pop	r27
+ 100:	af 91       	pop	r26
+ 102:	9f 91       	pop	r25
+ 104:	8f 91       	pop	r24
+ 106:	7f 91       	pop	r23
+ 108:	6f 91       	pop	r22
+ 10a:	5f 91       	pop	r21
+ 10c:	4f 91       	pop	r20
+ 10e:	3f 91       	pop	r19
+ 110:	2f 91       	pop	r18
+ 112:	0f 90       	pop	r0
+ 114:	0f be       	out	0x3f, r0	; 63
+ 116:	0f 90       	pop	r0
+ 118:	1f 90       	pop	r1
+ 11a:	18 95       	reti
+
+0000011c <main>:
+
+int main(void)
+{
+    Gpt_Init(&gaStrGpt_Configuration[GPT_TIMER0]);	
+ 11c:	80 e6       	ldi	r24, 0x60	; 96
+ 11e:	90 e0       	ldi	r25, 0x00	; 0
+ 120:	0e 94 05 01 	call	0x20a	; 0x20a <Gpt_Init>
+	Gpt_Init(&gaStrGpt_Configuration[GPT_TIMER1]);
+ 124:	86 e6       	ldi	r24, 0x66	; 102
+ 126:	90 e0       	ldi	r25, 0x00	; 0
+ 128:	0e 94 05 01 	call	0x20a	; 0x20a <Gpt_Init>
+	Led_Init(LED0_1_DIR_REG, LED0);
+ 12c:	62 e0       	ldi	r22, 0x02	; 2
+ 12e:	84 e3       	ldi	r24, 0x34	; 52
+ 130:	90 e0       	ldi	r25, 0x00	; 0
+ 132:	0e 94 49 00 	call	0x92	; 0x92 <Led_Init>
+	Led_Init(LED0_1_DIR_REG, LED1);
+ 136:	67 e0       	ldi	r22, 0x07	; 7
+ 138:	84 e3       	ldi	r24, 0x34	; 52
+ 13a:	90 e0       	ldi	r25, 0x00	; 0
+ 13c:	0e 94 49 00 	call	0x92	; 0x92 <Led_Init>
+	Global_Interrupts_StateSet(GLOBAL_INT_ENABLE);
+ 140:	81 e0       	ldi	r24, 0x01	; 1
+ 142:	0e 94 f8 00 	call	0x1f0	; 0x1f0 <Global_Interrupts_StateSet>
+    while (1) 
+    {
+		if(gu8GptCounter >= ONE_SECOND_GPT_OVF_NUM)
+ 146:	80 91 72 00 	lds	r24, 0x0072	; 0x800072 <__data_end>
+ 14a:	84 3f       	cpi	r24, 0xF4	; 244
+ 14c:	e0 f3       	brcs	.-8      	; 0x146 <main+0x2a>
+		{
+			Led_StateSet(LED0_1_OUT_REG, LED0, LED_TOGGLE);
+ 14e:	42 e0       	ldi	r20, 0x02	; 2
+ 150:	62 e0       	ldi	r22, 0x02	; 2
+ 152:	85 e3       	ldi	r24, 0x35	; 53
+ 154:	90 e0       	ldi	r25, 0x00	; 0
+ 156:	0e 94 4d 00 	call	0x9a	; 0x9a <Led_StateSet>
+			gu8GptCounter = 0U;
+ 15a:	10 92 72 00 	sts	0x0072, r1	; 0x800072 <__data_end>
+ 15e:	f3 cf       	rjmp	.-26     	; 0x146 <main+0x2a>
+
+00000160 <Dio_ChannelDirectionSet>:
+
+DioPinStateEnum_t Dio_ChannelRead(volatile uint8 * Port_reg, DioPinEnum_t Channel)
+{
+	DioPinStateEnum_t u8LocalPinValue = READ_BIT(*Port_reg,Channel);
+	return (u8LocalPinValue);
+}
+ 160:	44 23       	and	r20, r20
+ 162:	19 f0       	breq	.+6      	; 0x16a <Dio_ChannelDirectionSet+0xa>
+ 164:	41 30       	cpi	r20, 0x01	; 1
+ 166:	71 f0       	breq	.+28     	; 0x184 <Dio_ChannelDirectionSet+0x24>
+ 168:	08 95       	ret
+ 16a:	fc 01       	movw	r30, r24
+ 16c:	40 81       	ld	r20, Z
+ 16e:	21 e0       	ldi	r18, 0x01	; 1
+ 170:	30 e0       	ldi	r19, 0x00	; 0
+ 172:	02 c0       	rjmp	.+4      	; 0x178 <Dio_ChannelDirectionSet+0x18>
+ 174:	22 0f       	add	r18, r18
+ 176:	33 1f       	adc	r19, r19
+ 178:	6a 95       	dec	r22
+ 17a:	e2 f7       	brpl	.-8      	; 0x174 <Dio_ChannelDirectionSet+0x14>
+ 17c:	20 95       	com	r18
+ 17e:	24 23       	and	r18, r20
+ 180:	20 83       	st	Z, r18
+ 182:	08 95       	ret
+ 184:	fc 01       	movw	r30, r24
+ 186:	40 81       	ld	r20, Z
+ 188:	21 e0       	ldi	r18, 0x01	; 1
+ 18a:	30 e0       	ldi	r19, 0x00	; 0
+ 18c:	02 c0       	rjmp	.+4      	; 0x192 <Dio_ChannelDirectionSet+0x32>
+ 18e:	22 0f       	add	r18, r18
+ 190:	33 1f       	adc	r19, r19
+ 192:	6a 95       	dec	r22
+ 194:	e2 f7       	brpl	.-8      	; 0x18e <Dio_ChannelDirectionSet+0x2e>
+ 196:	24 2b       	or	r18, r20
+ 198:	20 83       	st	Z, r18
+ 19a:	08 95       	ret
+
+0000019c <Dio_ChannelWrite>:
+
+void Dio_ChannelWrite(volatile uint8 * Port_reg, DioPinEnum_t Channel, DioPinStateEnum_t State)
+{
+	switch(State)
+ 19c:	44 23       	and	r20, r20
+ 19e:	19 f0       	breq	.+6      	; 0x1a6 <Dio_ChannelWrite+0xa>
+ 1a0:	41 30       	cpi	r20, 0x01	; 1
+ 1a2:	71 f0       	breq	.+28     	; 0x1c0 <Dio_ChannelWrite+0x24>
+ 1a4:	08 95       	ret
+	{
+		case DIO_LOW:
+		CLEAR_BIT(*Port_reg,Channel);
+ 1a6:	fc 01       	movw	r30, r24
+ 1a8:	40 81       	ld	r20, Z
+ 1aa:	21 e0       	ldi	r18, 0x01	; 1
+ 1ac:	30 e0       	ldi	r19, 0x00	; 0
+ 1ae:	02 c0       	rjmp	.+4      	; 0x1b4 <Dio_ChannelWrite+0x18>
+ 1b0:	22 0f       	add	r18, r18
+ 1b2:	33 1f       	adc	r19, r19
+ 1b4:	6a 95       	dec	r22
+ 1b6:	e2 f7       	brpl	.-8      	; 0x1b0 <Dio_ChannelWrite+0x14>
+ 1b8:	20 95       	com	r18
+ 1ba:	24 23       	and	r18, r20
+ 1bc:	20 83       	st	Z, r18
+		break;
+ 1be:	08 95       	ret
+		case DIO_HIGH:
+		SET_BIT(*Port_reg,Channel);
+ 1c0:	fc 01       	movw	r30, r24
+ 1c2:	40 81       	ld	r20, Z
+ 1c4:	21 e0       	ldi	r18, 0x01	; 1
+ 1c6:	30 e0       	ldi	r19, 0x00	; 0
+ 1c8:	02 c0       	rjmp	.+4      	; 0x1ce <Dio_ChannelWrite+0x32>
+ 1ca:	22 0f       	add	r18, r18
+ 1cc:	33 1f       	adc	r19, r19
+ 1ce:	6a 95       	dec	r22
+ 1d0:	e2 f7       	brpl	.-8      	; 0x1ca <Dio_ChannelWrite+0x2e>
+ 1d2:	24 2b       	or	r18, r20
+ 1d4:	20 83       	st	Z, r18
+ 1d6:	08 95       	ret
+
+000001d8 <Dio_ChannelToggle>:
+		break;
+	}	
+}
+void Dio_ChannelToggle(volatile uint8 * Port_reg, DioPinEnum_t Channel)
+{
+	TOGGLE_BIT(*Port_reg,Channel);
+ 1d8:	fc 01       	movw	r30, r24
+ 1da:	40 81       	ld	r20, Z
+ 1dc:	21 e0       	ldi	r18, 0x01	; 1
+ 1de:	30 e0       	ldi	r19, 0x00	; 0
+ 1e0:	02 c0       	rjmp	.+4      	; 0x1e6 <Dio_ChannelToggle+0xe>
+ 1e2:	22 0f       	add	r18, r18
+ 1e4:	33 1f       	adc	r19, r19
+ 1e6:	6a 95       	dec	r22
+ 1e8:	e2 f7       	brpl	.-8      	; 0x1e2 <Dio_ChannelToggle+0xa>
+ 1ea:	24 27       	eor	r18, r20
+ 1ec:	20 83       	st	Z, r18
+ 1ee:	08 95       	ret
+
+000001f0 <Global_Interrupts_StateSet>:
+		break;
+	}
+}
+void Global_Interrupts_StateSet(GlobalInt_StateEnum_t State)
+{
+	switch(State)
+ 1f0:	88 23       	and	r24, r24
+ 1f2:	19 f0       	breq	.+6      	; 0x1fa <Global_Interrupts_StateSet+0xa>
+ 1f4:	81 30       	cpi	r24, 0x01	; 1
+ 1f6:	29 f0       	breq	.+10     	; 0x202 <Global_Interrupts_StateSet+0x12>
+ 1f8:	08 95       	ret
+	{
+		case GLOBAL_INT_DISABLE:
+		CLEAR_BIT(*AVR_STATUS_REG, GLOBAL_INTERRUPTS_ENABLE_BIT);
+ 1fa:	8f b7       	in	r24, 0x3f	; 63
+ 1fc:	8f 77       	andi	r24, 0x7F	; 127
+ 1fe:	8f bf       	out	0x3f, r24	; 63
+		break;
+ 200:	08 95       	ret
+		case GLOBAL_INT_ENABLE:
+		SET_BIT(*AVR_STATUS_REG, GLOBAL_INTERRUPTS_ENABLE_BIT);
+ 202:	8f b7       	in	r24, 0x3f	; 63
+ 204:	80 68       	ori	r24, 0x80	; 128
+ 206:	8f bf       	out	0x3f, r24	; 63
+ 208:	08 95       	ret
+
+0000020a <Gpt_Init>:
+#include "Gpt.h"
+#include "ATmega32_Cfg.h"
+#include "Macros.h"
+
+void Gpt_Init(const Gpt_ConfigType *ConfigPtr)
+{
+ 20a:	fc 01       	movw	r30, r24
+	
+	switch(ConfigPtr->GptNo)
+ 20c:	80 81       	ld	r24, Z
+ 20e:	88 23       	and	r24, r24
+ 210:	19 f0       	breq	.+6      	; 0x218 <Gpt_Init+0xe>
+ 212:	81 30       	cpi	r24, 0x01	; 1
+ 214:	19 f1       	breq	.+70     	; 0x25c <Gpt_Init+0x52>
+ 216:	08 95       	ret
+	{
+		case GPT_TIMER0:
+		/* !Comment: Clear Registers before applying configuration */
+		*TIMER0_CTRL_REG = 0x00U;
+ 218:	13 be       	out	0x33, r1	; 51
+		/* !Comment: Apply configuration */
+		switch(ConfigPtr->GptMode)
+ 21a:	81 81       	ldd	r24, Z+1	; 0x01
+ 21c:	88 23       	and	r24, r24
+ 21e:	19 f0       	breq	.+6      	; 0x226 <Gpt_Init+0x1c>
+ 220:	88 30       	cpi	r24, 0x08	; 8
+ 222:	41 f0       	breq	.+16     	; 0x234 <Gpt_Init+0x2a>
+ 224:	15 c0       	rjmp	.+42     	; 0x250 <Gpt_Init+0x46>
+		{
+			case GPT_NORMAL_MODE:
+			*TIMER0_CTRL_REG |= GPT_NORMAL_MODE;
+ 226:	83 b7       	in	r24, 0x33	; 51
+ 228:	83 bf       	out	0x33, r24	; 51
+			*TIMER_INT_MASK_REG |= ConfigPtr->GptIntState;
+ 22a:	99 b7       	in	r25, 0x39	; 57
+ 22c:	83 81       	ldd	r24, Z+3	; 0x03
+ 22e:	89 2b       	or	r24, r25
+ 230:	89 bf       	out	0x39, r24	; 57
+			break;
+ 232:	0e c0       	rjmp	.+28     	; 0x250 <Gpt_Init+0x46>
+			case GPT_CTC_MODE:
+			*TIMER0_CTRL_REG |= GPT_CTC_MODE;
+ 234:	83 b7       	in	r24, 0x33	; 51
+ 236:	88 60       	ori	r24, 0x08	; 8
+ 238:	83 bf       	out	0x33, r24	; 51
+			*TIMER_INT_MASK_REG |= (ConfigPtr->GptIntState << TIMER0_CMP_MATCH_INT_ENABLE_BIT);
+ 23a:	29 b7       	in	r18, 0x39	; 57
+ 23c:	93 81       	ldd	r25, Z+3	; 0x03
+ 23e:	89 2f       	mov	r24, r25
+ 240:	90 e0       	ldi	r25, 0x00	; 0
+ 242:	88 0f       	add	r24, r24
+ 244:	99 1f       	adc	r25, r25
+ 246:	82 2b       	or	r24, r18
+ 248:	89 bf       	out	0x39, r24	; 57
+			*TIMER0_CMP_REG = (ConfigPtr->GptCmpValue - 1U);
+ 24a:	84 81       	ldd	r24, Z+4	; 0x04
+ 24c:	81 50       	subi	r24, 0x01	; 1
+ 24e:	8c bf       	out	0x3c, r24	; 60
+			break;
+			default:
+			break;
+		}
+		*TIMER0_CTRL_REG |= ConfigPtr->GptClkDivision;
+ 250:	93 b7       	in	r25, 0x33	; 51
+ 252:	82 81       	ldd	r24, Z+2	; 0x02
+ 254:	89 2b       	or	r24, r25
+ 256:	83 bf       	out	0x33, r24	; 51
+		*TIMER0_COUNTER_REG = 0x00U;
+ 258:	12 be       	out	0x32, r1	; 50
+		break;
+ 25a:	08 95       	ret
+		case GPT_TIMER1:
+		/* !Comment: Clear Registers before applying configuration */
+		*TIMER1_CTRL_B_REG = 0x00U;
+ 25c:	1e bc       	out	0x2e, r1	; 46
+		*(uint16 *)TIMER1_COUNTER_LOW_REG = 0x00U;
+ 25e:	1d bc       	out	0x2d, r1	; 45
+ 260:	1c bc       	out	0x2c, r1	; 44
+		/* !Comment: Apply configuration */
+		switch(ConfigPtr->GptMode)
+ 262:	81 81       	ldd	r24, Z+1	; 0x01
+ 264:	88 23       	and	r24, r24
+ 266:	19 f0       	breq	.+6      	; 0x26e <Gpt_Init+0x64>
+ 268:	88 30       	cpi	r24, 0x08	; 8
+ 26a:	71 f0       	breq	.+28     	; 0x288 <Gpt_Init+0x7e>
+ 26c:	1d c0       	rjmp	.+58     	; 0x2a8 <Gpt_Init+0x9e>
+		{
+			case GPT_NORMAL_MODE:
+			*TIMER1_CTRL_B_REG |= GPT_NORMAL_MODE;
+ 26e:	8e b5       	in	r24, 0x2e	; 46
+ 270:	8e bd       	out	0x2e, r24	; 46
+			*TIMER_INT_MASK_REG |= (ConfigPtr->GptIntState << TIMER1_OVF_INT_ENABLE_BIT);
+ 272:	29 b7       	in	r18, 0x39	; 57
+ 274:	93 81       	ldd	r25, Z+3	; 0x03
+ 276:	89 2f       	mov	r24, r25
+ 278:	90 e0       	ldi	r25, 0x00	; 0
+ 27a:	88 0f       	add	r24, r24
+ 27c:	99 1f       	adc	r25, r25
+ 27e:	88 0f       	add	r24, r24
+ 280:	99 1f       	adc	r25, r25
+ 282:	82 2b       	or	r24, r18
+ 284:	89 bf       	out	0x39, r24	; 57
+			break;
+ 286:	10 c0       	rjmp	.+32     	; 0x2a8 <Gpt_Init+0x9e>
+			case GPT_CTC_MODE:
+			*TIMER1_CTRL_B_REG |= GPT_CTC_MODE;
+ 288:	8e b5       	in	r24, 0x2e	; 46
+ 28a:	88 60       	ori	r24, 0x08	; 8
+ 28c:	8e bd       	out	0x2e, r24	; 46
+			*TIMER_INT_MASK_REG |= (ConfigPtr->GptIntState << TIMER1_CMP_MATCH_A_INT_ENABLE_BIT);
+ 28e:	29 b7       	in	r18, 0x39	; 57
+ 290:	93 81       	ldd	r25, Z+3	; 0x03
+ 292:	30 e1       	ldi	r19, 0x10	; 16
+ 294:	93 9f       	mul	r25, r19
+ 296:	c0 01       	movw	r24, r0
+ 298:	11 24       	eor	r1, r1
+ 29a:	82 2b       	or	r24, r18
+ 29c:	89 bf       	out	0x39, r24	; 57
+			*(uint16 *)TIMER1_CMP_A_LOW_REG = (ConfigPtr->GptCmpValue -1U);
+ 29e:	84 81       	ldd	r24, Z+4	; 0x04
+ 2a0:	95 81       	ldd	r25, Z+5	; 0x05
+ 2a2:	01 97       	sbiw	r24, 0x01	; 1
+ 2a4:	9b bd       	out	0x2b, r25	; 43
+ 2a6:	8a bd       	out	0x2a, r24	; 42
+			break;
+			default:
+			break;
+		}
+		*TIMER1_CTRL_B_REG |= ConfigPtr->GptClkDivision;
+ 2a8:	9e b5       	in	r25, 0x2e	; 46
+ 2aa:	82 81       	ldd	r24, Z+2	; 0x02
+ 2ac:	89 2b       	or	r24, r25
+ 2ae:	8e bd       	out	0x2e, r24	; 46
+ 2b0:	08 95       	ret
+
+000002b2 <_exit>:
+ 2b2:	f8 94       	cli
+
+000002b4 <__stop_program>:
+ 2b4:	ff cf       	rjmp	.-2      	; 0x2b4 <__stop_program>
