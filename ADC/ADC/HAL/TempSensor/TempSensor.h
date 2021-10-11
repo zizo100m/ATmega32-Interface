@@ -13,7 +13,7 @@
 
 #define TEMP_SENSOR_PIN                (ADC_CHANNEL_0)
 
-#define ADC_TEN_BIT_PRECISION          (1023U)
+#define ADC_TEN_BIT_PRECISION          (1024U)
 #define ADC_EIGHT_BIT_PRECISION        (256U)
 #define ADC_5_VOLT_REF                 (5.0)
 #define ADC_3_3V_VOLT_REF              (3.3)

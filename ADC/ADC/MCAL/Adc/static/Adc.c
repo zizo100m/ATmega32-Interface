@@ -113,7 +113,17 @@ void Adc_ReadChannel(Adc_ChannelType Channel, Adc_ResolutionType Resolution, Adc
 		*DataBufferPtr = *ADC_DATA_HIGH_REG;
 		break;
 		case ADC_TEN_BIT:
-		*DataBufferPtr = *(uint16*)ADC_DATA_LOW_REG;
+		switch(gStrAdc_Configuration.ResAlignment)
+		{
+			case ADC_ALIGN_RIGHT:
+			*DataBufferPtr = *(uint16*)ADC_DATA_LOW_REG;
+			break;
+			case ADC_ALIGN_LEFT:
+			*DataBufferPtr = (uint16)((*(uint16*)ADC_DATA_LOW_REG>>6U));
+			break;
+			default:
+			break;
+		}	
 		break;
 		default:
 		break;

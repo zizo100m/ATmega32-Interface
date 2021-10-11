@@ -79,7 +79,7 @@ typedef enum
 /* !Comment: The Following Enumeration selects the Alignment of the ADC Result */
 typedef enum
 {
-	ADC_ALIGN_LEFT              = 0x40U,
+	ADC_ALIGN_LEFT              = 0x20U,
 	ADC_ALIGN_RIGHT             = 0x00U 
 }Adc_ResultAlignmentType;
 
@@ -99,7 +99,7 @@ typedef enum
 typedef enum
 {
 	ADC_INTERRUPT_DISABLE      = 0x00U,
-	ADC_INTERRUPT_ENABLE	   = 0x80U
+	ADC_INTERRUPT_ENABLE	   = 0x08U
 }Adc_IntStateType;
 
 /* !Comment: The Following Enumeration lists the status of the ADC Module */
