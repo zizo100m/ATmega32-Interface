@@ -1,7 +1,7 @@
 /*
  * Ext_Interrupts.h
  *
- * Created: 10/2/2021 9:08:17 PM
+ * Created: 10/8/2021 4:03:50 PM
  *  Author: Abdelaziz Moustafa
  */ 
 
@@ -9,42 +9,40 @@
 #ifndef EXT_INTERRUPTS_H_
 #define EXT_INTERRUPTS_H_
 
+#define INT0_MODE_SEL_BIT0			  (0U)
+#define INT0_MODE_SEL_BIT1			  (1U)
+#define INT1_MODE_SEL_BIT0			  (2U)
+#define INT1_MODE_SEL_BIT1			  (3U)
+#define INT2_MODE_SEL_BIT			  (6U)
+
+#define INT0_SOURCE_ENABLE_BIT		  (6U)
+#define INT1_SOURCE_ENABLE_BIT		  (7U)
+#define INT2_SOURCE_ENABLE_BIT		  (5U)
+
+#define GLOBAL_INTERRUPTS_ENABLE_BIT  (7U)
+
+typedef enum
+{
+	GLOBAL_INT_DISABLE,
+	GLOBAL_INT_ENABLE	
+}GlobalInt_StateEnum_t;
 
 typedef enum
 {
 	EXT_INT0,
 	EXT_INT1,
-	EXT_INT2	
-}ExtInterruptSourceEnum_t;
+	EXT_INT2
+}Ext_InterruptSourceEnum_t;
 
 typedef enum
 {
-	RISING_EDGE_MODE,
-	FALLING_EDGE_MODE,
-	EDGE_TRIGGER_MODE,
-	LOW_LEVEL_MODE	
-}ExtInterruptModeEnum_t;
+	EXT_INT_LOW_LEVEL,
+	EXT_INT_FALLING_EDGE,
+	EXT_INT_RISING_EDGE,
+	EXT_INT_BOTH_EDGES
+}Ext_InterruptModeEnum_t;
 
-typedef enum
-{
-	GLOBAL_INTERRUPTS_DISABLE,
-	GLOBAL_INTERRUPTS_ENABLE	
-}GlobalInterruptsStateEnum_t;
-
-#define INT0_ISC00					  (0U)
-#define INT0_ISC01					  (1U)
-#define INT1_ISC10					  (2U)
-#define INT1_ISC11					  (3U)
-#define INT2_ISC2					  (6U)
-
-#define INT0_ENABLE_BIT				  (6U)
-#define INT1_ENABLE_BIT				  (7U)
-#define INT2_ENABLE_BIT				  (5U)
-#define GLOBALE_INTERRUPTS_ENABLE_BIT (7U)
-
-void ExtInterrupt_Enable(ExtInterruptSourceEnum_t Source, ExtInterruptModeEnum_t Mode);
-void ExtInterrupt_Disable(ExtInterruptSourceEnum_t Source);
-void GlobaleInterrupts_StateSet(GlobalInterruptsStateEnum_t State);
-
-
+void Ext_Interrupts_Enable(Ext_InterruptSourceEnum_t Source, Ext_InterruptModeEnum_t Mode);
+void EXT_Interrupts_Disable(Ext_InterruptSourceEnum_t Source);
+void Global_Interrupts_StateSet(GlobalInt_StateEnum_t State);
 #endif /* EXT_INTERRUPTS_H_ */

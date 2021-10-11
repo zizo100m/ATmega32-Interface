@@ -18,8 +18,8 @@ ISR(INT0_vect)
 
 int main(void)
 {
-    ExtInterrupt_Enable(EXT_INT0, RISING_EDGE_MODE);
-	GlobaleInterrupts_StateSet(GLOBAL_INTERRUPTS_ENABLE);
+    Ext_Interrupts_Enable(EXT_INT0, EXT_INT_RISING_EDGE);
+	Global_Interrupts_StateSet(GLOBAL_INT_ENABLE);
 	Sw_init(SW1_2_DIR_REG, SW2);
 	Led_Init(LED0_1_DIR_REG, LED0);
     while (1) 

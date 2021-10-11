@@ -1,116 +1,104 @@
 /*
  * Ext_Interrupts.c
  *
- * Created: 10/2/2021 9:08:42 PM
+ * Created: 10/8/2021 4:04:12 PM
  *  Author: Abdelaziz Moustafa
  */ 
 
 #include "Ext_Interrupts.h"
-#include "ATmega32_Cfg.h"
 #include "Macros.h"
+#include "ATmega32_Cfg.h"
 
-void ExtInterrupt_Enable(ExtInterruptSourceEnum_t Source, ExtInterruptModeEnum_t Mode)
+static void Ext_Interrupt_ModeSet(Ext_InterruptModeEnum_t Mode, uint8 bit0, uint8 bit1);
+
+void Ext_Interrupts_Enable(Ext_InterruptSourceEnum_t Source, Ext_InterruptModeEnum_t Mode)
 {
 	switch(Source)
 	{
 		case EXT_INT0:
-		/* 1- Configure INT0 Mode  */
-		switch(Mode)
-		{
-			case LOW_LEVEL_MODE:
-			CLEAR_BIT(*MCU_CTRL_REG, INT0_ISC00);
-			CLEAR_BIT(*MCU_CTRL_REG, INT0_ISC01);
-			break;
-			case EDGE_TRIGGER_MODE:
-			SET_BIT(*MCU_CTRL_REG, INT0_ISC00);
-			CLEAR_BIT(*MCU_CTRL_REG, INT0_ISC01);
-			break;
-			case FALLING_EDGE_MODE:
-			CLEAR_BIT(*MCU_CTRL_REG, INT0_ISC00);
-			SET_BIT(*MCU_CTRL_REG, INT0_ISC01);
-			break;
-			case RISING_EDGE_MODE:
-			SET_BIT(*MCU_CTRL_REG, INT0_ISC00);
-			SET_BIT(*MCU_CTRL_REG, INT0_ISC01);
-			break;
-			default:
-			break;
-		}
-		/* 2 - Enable INT0 */
-		SET_BIT(*GENRAL_INT_CTRL_REG, INT0_ENABLE_BIT); 
+		/* !Comment: Configured INT0 Mode */
+		Ext_Interrupt_ModeSet(Mode, INT0_MODE_SEL_BIT0, INT0_MODE_SEL_BIT1);
+		/* !Comment: Enable INTO Source */
+		SET_BIT(*GENRAL_INT_CTRL_REG, INT0_SOURCE_ENABLE_BIT);
 		break;
 		case EXT_INT1:
-		/* 1 - Configure INT1 Mode */
-		switch(Mode)
-		{
-			case LOW_LEVEL_MODE:
-			CLEAR_BIT(*MCU_CTRL_REG, INT1_ISC10);
-			CLEAR_BIT(*MCU_CTRL_REG, INT1_ISC11);
-			break;
-			case EDGE_TRIGGER_MODE:
-			SET_BIT(*MCU_CTRL_REG, INT1_ISC10);
-			CLEAR_BIT(*MCU_CTRL_REG, INT1_ISC11);
-			break;
-			case FALLING_EDGE_MODE:
-			CLEAR_BIT(*MCU_CTRL_REG, INT1_ISC10);
-			SET_BIT(*MCU_CTRL_REG, INT1_ISC11);
-			break;
-			case RISING_EDGE_MODE:
-			SET_BIT(*MCU_CTRL_REG, INT1_ISC10);
-			SET_BIT(*MCU_CTRL_REG, INT1_ISC11);
-			break;
-			default:
-			break;
-		}
-		/* 2 - Enable INT1  */
-		SET_BIT(*GENRAL_INT_CTRL_REG, INT1_ENABLE_BIT);
+		/* !Comment: Configured INT1 Mode */
+		Ext_Interrupt_ModeSet(Mode, INT1_MODE_SEL_BIT0, INT1_MODE_SEL_BIT1);
+		/* !Comment: Enable INT1 Source */
+		SET_BIT(*GENRAL_INT_CTRL_REG, INT1_SOURCE_ENABLE_BIT);
 		break;
 		case EXT_INT2:
-		/* 1 - COnfigure IN2 Mode */
+		/* !Comment: Configured INT2 Mode */
 		switch(Mode)
 		{
-			case FALLING_EDGE_MODE:
-			CLEAR_BIT(*MCU_CTRL_STATUS_REG, INT2_ISC2);
+			case EXT_INT_FALLING_EDGE:
+			CLEAR_BIT(*MCU_CTRL_STATUS_REG, INT2_MODE_SEL_BIT);
 			break;
-			case RISING_EDGE_MODE:
-			SET_BIT(*MCU_CTRL_STATUS_REG, INT2_ISC2);
+			case EXT_INT_RISING_EDGE:
+			SET_BIT(*MCU_CTRL_STATUS_REG, INT2_MODE_SEL_BIT);
 			break;
 			default:
 			break;
 		}
+		/* !Comment: Enable INT2 Source */
+		SET_BIT(*GENRAL_INT_CTRL_REG, INT2_SOURCE_ENABLE_BIT);
 		break;
-		/* 2- Enable INT2 */
-		SET_BIT(*GENRAL_INT_CTRL_REG, INT2_ENABLE_BIT);
 		default:
 		break;
 	}
 }
-void ExtInterrupt_Disable(ExtInterruptSourceEnum_t Source)
+
+void EXT_Interrupts_Disable(Ext_InterruptSourceEnum_t Source)
 {
 	switch(Source)
 	{
 		case EXT_INT0:
-		CLEAR_BIT(*GENRAL_INT_CTRL_REG, INT0_ENABLE_BIT);
+		CLEAR_BIT(*GENRAL_INT_CTRL_REG, INT0_SOURCE_ENABLE_BIT);
 		break;
 		case EXT_INT1:
-		CLEAR_BIT(*GENRAL_INT_CTRL_REG, INT1_ENABLE_BIT);
+		CLEAR_BIT(*GENRAL_INT_CTRL_REG, INT1_SOURCE_ENABLE_BIT);
 		break;
 		case EXT_INT2:
-		CLEAR_BIT(*GENRAL_INT_CTRL_REG, INT2_ENABLE_BIT);
+		CLEAR_BIT(*GENRAL_INT_CTRL_REG, INT2_SOURCE_ENABLE_BIT);
 		break;
 		default:
 		break;
-	}	
+	}
 }
-void GlobaleInterrupts_StateSet(GlobalInterruptsStateEnum_t State)
+void Global_Interrupts_StateSet(GlobalInt_StateEnum_t State)
 {
 	switch(State)
 	{
-		case GLOBAL_INTERRUPTS_DISABLE:
-		CLEAR_BIT(*AVR_STATUS_REG, GLOBALE_INTERRUPTS_ENABLE_BIT);
+		case GLOBAL_INT_DISABLE:
+		CLEAR_BIT(*AVR_STATUS_REG, GLOBAL_INTERRUPTS_ENABLE_BIT);
 		break;
-		case GLOBAL_INTERRUPTS_ENABLE:
-		SET_BIT(*AVR_STATUS_REG, GLOBALE_INTERRUPTS_ENABLE_BIT);
+		case GLOBAL_INT_ENABLE:
+		SET_BIT(*AVR_STATUS_REG, GLOBAL_INTERRUPTS_ENABLE_BIT);
+		break;
+		default:
+		break;
+	}
+}
+
+static void Ext_Interrupt_ModeSet(Ext_InterruptModeEnum_t Mode, uint8 bit0, uint8 bit1)
+{
+	switch(Mode)
+	{
+		case EXT_INT_LOW_LEVEL:
+		CLEAR_BIT(*MCU_CTRL_REG, bit0);
+		CLEAR_BIT(*MCU_CTRL_REG, bit1);
+		break;
+		case EXT_INT_FALLING_EDGE:
+		CLEAR_BIT(*MCU_CTRL_REG, bit0);
+		SET_BIT(*MCU_CTRL_REG, bit1);
+		break;
+		case EXT_INT_RISING_EDGE:
+		SET_BIT(*MCU_CTRL_REG, bit0);
+		SET_BIT(*MCU_CTRL_REG, bit1);
+		break;
+		case EXT_INT_BOTH_EDGES:
+		SET_BIT(*MCU_CTRL_REG, bit0);
+		CLEAR_BIT(*MCU_CTRL_REG, bit1);
 		break;
 		default:
 		break;
