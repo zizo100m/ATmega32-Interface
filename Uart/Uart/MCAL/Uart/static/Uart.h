@@ -120,6 +120,7 @@ void Uart_StringReceive(uint8 *ReceiveBuff);
 Uart_StatusType Uart_StatusGet(Uart_ModeType Mode);
 
 
+
 extern Uart_ConfigType gStrUart_Configuration;
 
 #endif /* UART_H_ */

@@ -8,7 +8,7 @@
 #include "Uart.h"
 #include "Atmega32_Cfg.h"
 #include "Macros.h"
-
+#include <avr/io.h>
 void Uart_Init(const Uart_ConfigType *ConfigPtr)
 {
 	/* !Comment: Clear the registers before applying the configuration */
@@ -81,7 +81,7 @@ void Uart_Transmit(const uint8 Data)
 void Uart_Receive(uint8 *ReceiveBuff)
 {
 	/* !Comment: Wait until the There is data received */
-	while(Uart_StatusGet(UART_RX) == UART_RX_COMPLETE)
+	while(Uart_StatusGet(UART_RX) != UART_RX_COMPLETE)
 	{
 
 	}
