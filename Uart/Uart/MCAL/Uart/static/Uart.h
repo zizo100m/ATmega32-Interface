@@ -35,7 +35,7 @@ typedef enum
 	UART_6_DATA_BITS,
 	UART_7_DATA_BITS,
 	UART_8_DATA_BITS,
-	UART_9_DATA_BITS = 0x07U
+	UART_9_DATA_BITS = 0x03U
 }Uart_DataType;
 
 typedef enum
@@ -47,8 +47,8 @@ typedef enum
 typedef enum
 {
 	UART_PARITY_DISABLED,
-	UART_ODD_PARITY  = 0x02U,
-	UART_EVEN_PARITY
+	UART_EVEN_PARITY  = 0x02U,
+	UART_ODD_PARITY
 }Uart_ParityType;
 
 typedef enum

@@ -17,6 +17,8 @@
 #define UART_CHAR_SIZE_BIT         (2U)
 #define UART_COMM_TYPE_BIT         (3U)
 #define UART_DOUBLE_SPEED_BIT      (1U)
+#define UART_PARITY_SELECT_BITS    (4U)
+#define UART_INT_STATE_BITS        (5U)
 
 /* Communication Flags */
 #define UART_DATA_REG_EMPTY_FLAG   (5U)

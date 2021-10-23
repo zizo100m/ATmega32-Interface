@@ -21,7 +21,7 @@ void Uart_Init(const Uart_ConfigType *ConfigPtr)
 	/* !Comment: Select the Operation Mode of the UART: Asynchronous/ Synchronous */
 	*UART_CTRL_STATUS_C_REG |= (ConfigPtr->OperationMode << UART_MODE_SELECT_BIT);
 	/* !Comment: Select Parity: Disabled / Odd / Even */
-	*UART_CTRL_STATUS_C_REG |= ConfigPtr->Parity;
+	*UART_CTRL_STATUS_C_REG |= (ConfigPtr->Parity << UART_PARITY_SELECT_BITS);
 	/* !Comment: Select Data bits in UART frame: 5, 6, 7, 8, 9 bits */
 	if(ConfigPtr->DataBits == UART_9_DATA_BITS)
 	{
@@ -33,7 +33,7 @@ void Uart_Init(const Uart_ConfigType *ConfigPtr)
 	}
 	*UART_CTRL_STATUS_C_REG |= (ConfigPtr->DataBits << UART_DATA_BITS_NUM);
 	/* !Comment: Select the Clock polarity in case of Synchronous mode */
-	if(ConfigPtr->OperationMode == UART_ASYNCH_MODE)
+	if(ConfigPtr->OperationMode == UART_SYNCH_MODE)
 	{
 		*UART_CTRL_STATUS_C_REG |= ConfigPtr->ClkPolarity;
 	}
@@ -44,7 +44,7 @@ void Uart_Init(const Uart_ConfigType *ConfigPtr)
 	/* !Comment: Select UART Communication Type: Full-Duplex/Half-Duplex */
 	*UART_CTRL_STATUS_B_REG |= (ConfigPtr->Mode << UART_COMM_TYPE_BIT);
 	/* !Comment: Select UART Interrupt state */
-	*UART_CTRL_STATUS_B_REG |= (ConfigPtr->IntState);
+	*UART_CTRL_STATUS_B_REG |= (ConfigPtr->IntState << UART_INT_STATE_BITS);
 	/* !Comment: Select UART Speed: Normal Mode/Double Speed Mode */
 	*UART_CTRL_STATUS_A_REG |= (ConfigPtr->Speed << UART_DOUBLE_SPEED_BIT);
 

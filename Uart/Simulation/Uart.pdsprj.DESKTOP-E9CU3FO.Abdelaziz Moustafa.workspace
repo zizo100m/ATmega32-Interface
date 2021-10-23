@@ -72,7 +72,7 @@
      <ITEM name="TopLineAddress">00000000</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="16" x="188" flags="80000000" y="300" h="32" pid="14" iid="1">
+   <POPUP w="16" x="188" flags="00000000" y="300" h="32" pid="14" iid="1">
     <PROPERTIES>
      <ITEM name="DataType">2</ITEM>
      <ITEM name="DispChars">Yes</ITEM>
@@ -106,6 +106,34 @@
     <PROPERTIES>
      <ITEM name="AutoEcho">1</ITEM>
      <ITEM name="HexMode">0</ITEM>
+    </PROPERTIES>
+   </POPUP>
+   <POPUP w="600" x="48" flags="0000002b" y="160" h="400" pid="1" iid="1">
+    <PROPERTIES>
+     <ITEM name="CaseSensitive">No</ITEM>
+     <ITEM name="DISPADDRS">Yes</ITEM>
+     <ITEM name="DISPLNUMS">No</ITEM>
+     <ITEM name="DISPOPCODES">No</ITEM>
+     <ITEM name="FIXUPBPTS">Yes</ITEM>
+     <ITEM name="WordsOnly">No</ITEM>
+     <ITEM name="nBreakpoints">0</ITEM>
+    </PROPERTIES>
+   </POPUP>
+   <POPUP w="300" x="68" flags="0000000b" y="180" h="300" pid="2" iid="1">
+    <PROPERTIES>
+     <ITEM name="Address Column Width">93</ITEM>
+     <ITEM name="AutoResize">No</ITEM>
+     <ITEM name="Gridlines">Yes</ITEM>
+     <ITEM name="Name Column Width">93</ITEM>
+     <ITEM name="ShowAddresses">Yes</ITEM>
+     <ITEM name="ShowGlobals">Yes</ITEM>
+     <ITEM name="ShowPreviousValues">No</ITEM>
+     <ITEM name="ShowTypes">No</ITEM>
+     <ITEM name="ShowWatchPoint">No</ITEM>
+     <ITEM name="TriggerMode">0</ITEM>
+     <ITEM name="Value Column Width">93</ITEM>
+     <ITEM name="Version">100</ITEM>
+     <ITEM name="nItems">0</ITEM>
     </PROPERTIES>
    </POPUP>
   </PWI>
