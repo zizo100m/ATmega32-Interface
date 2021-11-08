@@ -8,7 +8,7 @@
 #include "Twi.h"
 #include "Macros.h"
 #include "ATmega32_Cfg.h"
-
+#include "avr/io.h"
 void Twi_Init(const Twi_ConfigType *ConfigPtr)
 {
      /* !Comment: Clear Registers before applying configuration */
@@ -52,27 +52,7 @@ void Twi_Start(void)
      * send the start bit by TWSTA=1
      * Enable TWI Module TWEN=1
      */
-    SET_BIT(*TWI_CTRL_REG, TWI_INT_FLAG_BIT);
-    SET_BIT(*TWI_CTRL_REG, TWI_START_BIT);
-    SET_BIT(*TWI_CTRL_REG, TWI_ENABLE_BIT);
-    /* Wait for TWINT flag set in TWCR Register (start bit is send successfully) */
-    while (READ_BIT(*TWI_CTRL_REG, TWI_INT_FLAG_BIT) == 0U)
-    {
-        /* Do Nothing */
-    }
-}
-
-void Twi_RepStart(void)
-{
-    /*
-     * Clear the TWINT flag before sending the start bit TWINT=1
-     * send the start bit by TWSTA=1
-     * Enable TWI Module TWEN=1
-     */
-    SET_BIT(*TWI_CTRL_REG, TWI_INT_FLAG_BIT);
-    SET_BIT(*TWI_CTRL_REG, TWI_START_BIT);
-	CLEAR_BIT(*TWI_CTRL_REG, TWI_STOP_BIT);
-    SET_BIT(*TWI_CTRL_REG, TWI_ENABLE_BIT);
+	*TWI_CTRL_REG = (1U<<TWI_INT_FLAG_BIT) | (1U<<TWI_START_BIT) | (1U<<TWI_ENABLE_BIT);
     /* Wait for TWINT flag set in TWCR Register (start bit is send successfully) */
     while (READ_BIT(*TWI_CTRL_REG, TWI_INT_FLAG_BIT) == 0U)
     {
@@ -87,9 +67,7 @@ void Twi_Stop(void)
      * send the stop bit by TWSTO=1
      * Enable TWI Module TWEN=1
      */
-    SET_BIT(*TWI_CTRL_REG, TWI_INT_FLAG_BIT);
-    SET_BIT(*TWI_CTRL_REG, TWI_STOP_BIT);
-    SET_BIT(*TWI_CTRL_REG, TWI_ENABLE_BIT);
+	*TWI_CTRL_REG = (1U<<TWI_STOP_BIT) | (1U<<TWI_ENABLE_BIT) | (1U<<TWI_INT_FLAG_BIT);
 }
 
 void Twi_Write(uint8 data)
@@ -100,8 +78,8 @@ void Twi_Write(uint8 data)
      * Clear the TWINT flag before sending the data TWINT=1
      * Enable TWI Module TWEN=1
      */
-    SET_BIT(*TWI_CTRL_REG, TWI_INT_FLAG_BIT);
-    SET_BIT(*TWI_CTRL_REG, TWI_ENABLE_BIT);
+	*TWI_CTRL_REG = (1U<<TWI_INT_FLAG_BIT)|(1U<<TWI_ENABLE_BIT);
+
     /* Wait for TWINT flag set in TWCR Register(data is send successfully) */
     while (READ_BIT(*TWI_CTRL_REG, TWI_INT_FLAG_BIT) == 0U)
     {
@@ -117,9 +95,7 @@ uint8 Twi_ReadWithACK(void)
      * Enable sending ACK after reading or receiving data TWEA=1
      * Enable TWI Module TWEN=1
      */
-    SET_BIT(*TWI_CTRL_REG, TWI_INT_FLAG_BIT);
-    SET_BIT(*TWI_CTRL_REG, TWI_ENABLE_ACK_BIT);
-    SET_BIT(*TWI_CTRL_REG, TWI_ENABLE_BIT);
+	*TWI_CTRL_REG = (1U<<TWI_ENABLE_ACK_BIT) | (1U<<TWI_ENABLE_BIT) | (1U<<TWI_INT_FLAG_BIT);
     /* Wait for TWINT flag set in TWCR Register (data received successfully) */
     while (READ_BIT(*TWI_CTRL_REG, TWI_INT_FLAG_BIT) == 0U)
     {
@@ -137,9 +113,7 @@ uint8 Twi_ReadWithNACK(void)
      * Clear the TWINT flag before reading the data TWINT=1
      * Enable TWI Module TWEN=1
      */
-    SET_BIT(*TWI_CTRL_REG, TWI_INT_FLAG_BIT);
-	CLEAR_BIT(*TWI_CTRL_REG, TWI_ENABLE_ACK_BIT);
-    SET_BIT(*TWI_CTRL_REG, TWI_ENABLE_BIT);
+	*TWI_CTRL_REG = (1U<<TWI_INT_FLAG_BIT) | (1U<<TWI_ENABLE_BIT);
     /* Wait for TWINT flag set in TWCR Register (data received successfully) */
     while (READ_BIT(*TWI_CTRL_REG, TWI_INT_FLAG_BIT) == 0U)
     {

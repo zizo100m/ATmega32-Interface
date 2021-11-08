@@ -56,7 +56,6 @@ typedef struct
 
 void Twi_Init(const Twi_ConfigType *ConfigPtr);
 void Twi_Start(void);
-void Twi_RepStart(void);
 void Twi_Stop(void);
 void Twi_Write(uint8 data);
 uint8 Twi_ReadWithACK(void);

@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <WORKSPACE>
  <FRAME activewindow="1">
-  <PLACEMENT>2c00000002000000030000000083ffff0083ffffffffffffffffffff03f9ffff140000009dfdffff3b050000</PLACEMENT>
+  <PLACEMENT>2c0000000200000003000000ffffffffffffffffffffffffffffffff03f9ffff140000009dfdffff3b050000</PLACEMENT>
   <WINDOW type="default" module="STARTUP"/>
   <WINDOW type="default" module="ISIS"/>
  </FRAME>
  <MODULE name="VSMDEBUG">
   <PWI>
-   <POPUP w="1170" x="48" flags="00008003" y="160" h="405" pid="0" iid="-1">
+   <POPUP w="1170" x="-1472" flags="00008003" y="873" h="405" pid="0" iid="-1">
     <PROPERTIES>
-     <ITEM name="Message Column Width">910</ITEM>
+     <ITEM name="Message Column Width">1031</ITEM>
      <ITEM name="ShowGrid">No</ITEM>
      <ITEM name="Source Column Width">100</ITEM>
      <ITEM name="Time Column Width">120</ITEM>
@@ -33,7 +33,7 @@
      <ITEM name="nItems">0</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="741" x="-2286" flags="00008023" y="697" h="250" pid="0" iid="11">
+   <POPUP w="741" x="-2286" flags="00000023" y="698" h="250" pid="0" iid="11">
     <PROPERTIES>
      <ITEM name="ComboBox1000">S</ITEM>
      <ITEM name="ComboBox1001">Sr</ITEM>
@@ -82,7 +82,7 @@
      <ITEM name="TopLineAddress">00000000</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="16" x="188" flags="80000000" y="300" h="32" pid="14" iid="1">
+   <POPUP w="16" x="188" flags="00000000" y="300" h="32" pid="14" iid="1">
     <PROPERTIES>
      <ITEM name="DataType">2</ITEM>
      <ITEM name="DispChars">Yes</ITEM>

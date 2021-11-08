@@ -18,16 +18,13 @@ int main(void)
     while (1) 
     {
 		uint8 u8LocalRecData = 0U;
-		uint8 status;
-		//Eeprom_WriteByte(0x00, 0x05);
-		//_delay_ms(1000);// You must allow sufficient delay for the EEPROM to complete its write cycle
-		status = Eeprom_CurrenAddReadByte(&u8LocalRecData);
+		Eeprom_WriteByte(0x00, 0x05);
+		_delay_ms(1000);// You must allow sufficient delay for the EEPROM to complete its write cycle
+		Eeprom_ReadByte(0x00, &u8LocalRecData);
 		LCD_RowCol_Select(0,0);
 		LCD_StringDisplay("From EEPROM");
 		LCD_RowCol_Select(1,5);
 		LCD_IntegerDisplay(u8LocalRecData);
-		LCD_RowCol_Select(1,8);
-		LCD_IntegerDisplay(status);
 		_delay_ms(1000);
     }
 }

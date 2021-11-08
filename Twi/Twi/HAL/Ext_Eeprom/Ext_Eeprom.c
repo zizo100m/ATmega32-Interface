@@ -76,7 +76,7 @@ Eeprom_StatusType Eeprom_ReadByte(uint8 u8Addr, uint8 *u8Data)
     }
 
     /* Send the Repeated Start Bit */
-    Twi_RepStart();
+    Twi_Start();
     if (Twi_StatusGet() != TW_REP_START)
     {
         return EEPROM_E_NOK;
